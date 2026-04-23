@@ -1,29 +1,31 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-sand-50: #F9F8F6;
+  --color-sand-100: #F2EFE9;
+  --color-sand-200: #E6E1D6;
+  --color-sand-300: #D5CEC4;
+  --color-sand-400: #A8A196;
+  --color-sand-500: #8C867D;
+  --color-sand-800: #4A463F;
+  --color-sand-900: #2C2A26;
+  --color-sand-950: #1A1816;
+
+  --color-forest-800: #1C2B23;
+  --color-forest-900: #111A15;
+
+  --color-terracotta: #A64B3B;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+}
 
 @layer base {
   :root {
-    --color-sand-50: #F9F8F6;
-    --color-sand-100: #F2EFE9;
-    --color-sand-200: #E6E1D6;
-    --color-sand-300: #D5CEC4;
-    --color-sand-800: #4A463F;
-    --color-sand-900: #2C2A26;
-    --color-sand-950: #1A1816;
-
-    --color-forest-800: #1C2B23;
-    --color-forest-900: #111A15;
-
-    --color-terracotta: #A64B3B;
-
     --color-background: var(--color-sand-50);
     --color-foreground: var(--color-sand-950);
-
-    --radius-sm: 0.25rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 1rem;
-    --radius-full: 9999px;
   }
 
   * {
