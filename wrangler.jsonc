@@ -8,20 +8,14 @@
 		{
 			"binding": "DB",
 			"database_name": "titz-emdash-site",
-			// Run `wrangler d1 create my-emdash-site` and paste the real ID here for deploy
-			"database_id": "9f2c3b21-a2c7-4dcd-a91b-9e07ebfb654e",
-		},
+			"database_id": "9f2c3b21-a2c7-4dcd-a91b-9e07ebfb654e"
+		}
 	],
 	"r2_buckets": [
 		{
 			"binding": "MEDIA",
-			"bucket_name": "titz-emdash-media","preview_bucket_name": "titz-emdash-media",
-		},
-	],
-	// Worker Loader for plugin sandboxing
-	"worker_loaders": [
-		{
-			"binding": "LOADER",
-		},
-	],
+			"bucket_name": "titz-emdash-media",
+			"preview_bucket_name": "titz-emdash-media"
+		}
+	]
 }
