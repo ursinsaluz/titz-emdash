@@ -8,7 +8,9 @@ import emdash from "emdash/astro";
 
 export default defineConfig({
 	output: "server",
-	adapter: cloudflare(),
+	adapter: cloudflare({
+		imageService: 'passthrough'
+	}),
 	image: {
 		layout: "constrained",
 		responsiveStyles: true,
@@ -18,9 +20,7 @@ export default defineConfig({
 		emdash({
 			database: d1({ binding: "DB", session: "auto" }),
 			storage: r2({ binding: "MEDIA" }),
-			plugins: [formsPlugin()],
-			sandboxed: [webhookNotifierPlugin()],
-			sandboxRunner: sandbox(),
+			plugins: [formsPlugin(), webhookNotifierPlugin()], 
 			marketplace: "https://marketplace.emdashcms.com",
 		}),
 	],
