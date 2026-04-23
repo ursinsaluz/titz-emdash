@@ -1,0 +1,379 @@
+{
+  "collections": [
+    {
+      "slug": "dishes",
+      "label": "Signature Dishes",
+      "labelSingular": "Signature Dishes",
+      "supports": [],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "category",
+          "label": "category",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "description",
+          "label": "description",
+          "type": "text",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "image",
+          "label": "image",
+          "type": "image",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "tags",
+          "label": "tags",
+          "type": "string",
+          "required": false,
+          "unique": false
+        }
+      ]
+    },
+    {
+      "slug": "education",
+      "label": "Education",
+      "labelSingular": "Education",
+      "supports": [],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "year",
+          "label": "year",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "place",
+          "label": "place",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "note",
+          "label": "note",
+          "type": "text",
+          "required": false,
+          "unique": false
+        }
+      ]
+    },
+    {
+      "slug": "hobbies",
+      "label": "Hobbies",
+      "labelSingular": "Hobbies",
+      "supports": [],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "note",
+          "label": "note",
+          "type": "text",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "image",
+          "label": "image",
+          "type": "image",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "placeholder",
+          "label": "placeholder",
+          "type": "string",
+          "required": false,
+          "unique": false
+        }
+      ]
+    },
+    {
+      "slug": "news",
+      "label": "News & Press",
+      "labelSingular": "News & Press",
+      "supports": [],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "publication",
+          "label": "publication",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "date",
+          "label": "date",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "body",
+          "label": "body",
+          "type": "text",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "tag",
+          "label": "tag",
+          "type": "string",
+          "required": false,
+          "unique": false
+        }
+      ]
+    },
+    {
+      "slug": "offers",
+      "label": "Offers",
+      "labelSingular": "Offers",
+      "supports": [],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "lead",
+          "label": "lead",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "body",
+          "label": "body",
+          "type": "text",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "cta_text",
+          "label": "cta_text",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "image",
+          "label": "image",
+          "type": "image",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "featured",
+          "label": "featured",
+          "type": "boolean",
+          "required": false,
+          "unique": false
+        }
+      ]
+    },
+    {
+      "slug": "pages",
+      "label": "Pages",
+      "labelSingular": "Page",
+      "supports": [
+        "drafts",
+        "revisions",
+        "search"
+      ],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "content",
+          "label": "Content",
+          "type": "portableText",
+          "required": false,
+          "unique": false
+        }
+      ]
+    },
+    {
+      "slug": "posts",
+      "label": "Posts",
+      "labelSingular": "Post",
+      "supports": [
+        "drafts",
+        "revisions",
+        "search"
+      ],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "featured_image",
+          "label": "Featured Image",
+          "type": "image",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "content",
+          "label": "Content",
+          "type": "portableText",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "excerpt",
+          "label": "Excerpt",
+          "type": "text",
+          "required": false,
+          "unique": false
+        }
+      ]
+    },
+    {
+      "slug": "qualifications",
+      "label": "Qualifications",
+      "labelSingular": "Qualifications",
+      "supports": [],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "kind",
+          "label": "kind",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "year",
+          "label": "year",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "note",
+          "label": "note",
+          "type": "text",
+          "required": false,
+          "unique": false
+        }
+      ]
+    },
+    {
+      "slug": "stations",
+      "label": "CV Stations",
+      "labelSingular": "CV Stations",
+      "supports": [],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "year",
+          "label": "year",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "place",
+          "label": "place",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "role",
+          "label": "role",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "awards",
+          "label": "awards",
+          "type": "string",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "body",
+          "label": "body",
+          "type": "text",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "image",
+          "label": "image",
+          "type": "image",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "current",
+          "label": "current",
+          "type": "boolean",
+          "required": false,
+          "unique": false
+        }
+      ]
+    }
+  ],
+  "version": "6d12450f0a87c202"
+}

@@ -1,450 +1,177 @@
 ---
-import { getEmDashCollection, getEntryTerms, getSiteSettings } from "emdash";
-import { Image } from "emdash/ui";
-import Base from "../layouts/Base.astro";
-import PostCard from "../components/PostCard.astro";
-import { getReadingTime } from "../utils/reading-time";
-import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import BaseLayout from '../layouts/Base.astro';
+import TzArrow from '../components/TzArrow.astro';
+import { getEntry } from 'astro:content';
+import { getEmDashCollection } from 'emdash/runtime';
+import { Image } from 'emdash/ui';
 
-const { entries: posts, cacheHint } = await getEmDashCollection("posts");
-const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings());
+// Astro requires caching on pages that query EmDash
+Astro.cache.set({ maxAge: 60, staleWhileRevalidate: 300 });
 
-Astro.cache.set(cacheHint);
+// Fetch data
+const dishes = await getEmDashCollection("dishes");
+const news = await getEmDashCollection("news");
+const offers = await getEmDashCollection("offers");
 
-const sortedPosts = posts.toSorted((a, b) => {
-	const dateA = a.data.publishedAt?.getTime() ?? 0;
-	const dateB = b.data.publishedAt?.getTime() ?? 0;
-	return dateB - dateA;
-});
-
-// Find the first post with a featured image for the hero
-const featuredPost = sortedPosts.find((p) => p.data.featured_image);
-const featuredIndex = featuredPost ? sortedPosts.indexOf(featuredPost) : -1;
-
-// Get remaining posts (exclude featured if found, limit to 6 for grid)
-const gridPosts = sortedPosts.filter((_, i) => i !== featuredIndex).slice(0, 6);
-
-// Total posts shown = featured (if any) + grid posts
-const totalShown = (featuredPost ? 1 : 0) + gridPosts.length;
-const hasMorePosts = sortedPosts.length > totalShown;
-
-// Fetch tags for featured post (bylines are already hydrated by getEmDashCollection)
-let featuredTags: Array<{ slug: string; label: string }> = [];
-const featuredBylines = featuredPost?.data.bylines ?? [];
-if (featuredPost) {
-	const tags = await getEntryTerms("posts", featuredPost.data.id, "tag");
-	featuredTags = tags.map((t) => ({ slug: t.slug, label: t.label }));
-}
-
-// Fetch tags for grid posts (bylines are already hydrated by getEmDashCollection)
-const gridPostsWithTags = await Promise.all(
-	gridPosts.map(async (post) => {
-		const tags = await getEntryTerms("posts", post.data.id, "tag");
-		const bylines = post.data.bylines ?? [];
-		return {
-			post,
-			tags: tags.map((t) => ({ slug: t.slug, label: t.label })),
-			bylines,
-		};
-	})
-);
-
-// Format date helper
-function formatDate(date: Date | null | undefined) {
-	if (!date) return null;
-	return date.toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	});
-}
+// Sort or filter as needed
+const sortedNews = news.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+const featuredOffers = offers.filter(o => o.featured);
 ---
 
-<Base title={siteTitle} description={siteTagline}>
-	{
-		posts.length === 0 ? (
-			<section class="empty-state">
-				<h2>No posts yet</h2>
-				<p>Create your first post in the admin panel.</p>
-				<a href="/_emdash/admin/content/posts/new" class="btn">
-					Create a post
-				</a>
-			</section>
-		) : (
-			<div class="home-content">
-				{/* Featured Post - Side by side */}
-				{featuredPost && (
-					<section class="featured-section">
-						<div class="featured-grid">
-							<a href={`/posts/${featuredPost.id}`} class="featured-image-link">
-								<div class="featured-image">
-									<Image image={featuredPost.data.featured_image} />
-								</div>
-							</a>
-							<div class="featured-content">
-								<div class="featured-meta">
-									{featuredBylines.length > 0 && (
-										<>
-											<div class="featured-bylines">
-												{featuredBylines.slice(0, 2).map((credit, index) => (
-													<>
-														{index > 0 && <span class="byline-sep">,</span>}
-														<span class="featured-byline">
-															{credit.byline.avatarMediaId && (
-																<img
-																	src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
-																	alt={credit.byline.displayName}
-																	class="featured-byline-avatar"
-																/>
-															)}
-															<span class="featured-byline-name">
-																{credit.byline.displayName}
-															</span>
-														</span>
-													</>
-												))}
-												{featuredBylines.length > 2 && (
-													<span class="byline-more">
-														+{featuredBylines.length - 2}
-													</span>
-												)}
-											</div>
-											<span class="meta-dot" />
-										</>
-									)}
-									{formatDate(featuredPost.data.publishedAt) && (
-										<time>{formatDate(featuredPost.data.publishedAt)}</time>
-									)}
-									<span class="meta-dot" />
-									<span>
-										{getReadingTime(featuredPost.data.content)} min read
-									</span>
-								</div>
-								<a
-									href={`/posts/${featuredPost.id}`}
-									class="featured-title-link"
-								>
-									<h1 class="featured-title">{featuredPost.data.title}</h1>
-								</a>
-								{featuredPost.data.excerpt && (
-									<p class="featured-excerpt">{featuredPost.data.excerpt}</p>
-								)}
-								{featuredTags.length > 0 && (
-									<div class="featured-tags">
-										{featuredTags.map((tag) => (
-											<a href={`/tag/${tag.slug}`} class="featured-tag">
-												{tag.label}
-											</a>
-										))}
-									</div>
-								)}
-							</div>
-						</div>
-					</section>
-				)}
+<BaseLayout>
+  {/* Hero Section */}
+  <section class="min-h-screen pt-32 pb-24 px-6 md:px-12 flex flex-col justify-end bg-sand-950 text-sand-50 relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img 
+        src="https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&q=80&w=2000" 
+        alt="Küche Atmosphäre" 
+        class="w-full h-full object-cover opacity-40 mix-blend-overlay"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-sand-950 via-sand-950/50 to-transparent"></div>
+    </div>
+    
+    <div class="relative z-10 max-w-5xl">
+      <div class="flex items-center gap-4 mb-8">
+        <span class="w-12 h-[1px] bg-terracotta"></span>
+        <span class="text-terracotta font-medium tracking-widest uppercase text-sm">Sebastian Titz</span>
+      </div>
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight mb-8 leading-[1.1] text-balance">
+        Authentisch.<br/>Regional.<br/><span class="text-sand-300 italic">Exzellent.</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-sand-300 max-w-2xl text-balance font-light leading-relaxed mb-12">
+        Kulinarik zwischen Michelin-Stern und Bündner Bodenständigkeit. 
+        Schnörkellose Gerichte mit Wow-Effekt.
+      </p>
+      
+      <div class="flex flex-wrap gap-6 items-center">
+        <a href="#restaurant" class="px-8 py-4 bg-white text-sand-950 font-medium rounded-full hover:bg-sand-100 transition-colors flex items-center gap-2">
+          Restaurant entdecken
+          <TzArrow className="w-5 h-5" />
+        </a>
+        <a href="/stationen" class="px-8 py-4 bg-transparent text-white border border-white/30 rounded-full hover:bg-white/10 transition-colors">
+          Vita & Stationen
+        </a>
+      </div>
+    </div>
+  </section>
 
-				{/* Latest Posts */}
-				{gridPostsWithTags.length > 0 && (
-					<section class="posts-section">
-						<header class="section-header">
-							<h2 class="section-title">Latest</h2>
-							{hasMorePosts && (
-								<a href="/posts" class="section-link">
-									View all
-								</a>
-							)}
-						</header>
-						<div class="posts-grid">
-							{gridPostsWithTags.map(({ post, tags, bylines }) => (
-								<PostCard
-									title={post.data.title ?? "Untitled"}
-									excerpt={post.data.excerpt}
-									featuredImage={post.data.featured_image}
-									href={`/posts/${post.id}`}
-									date={post.data.publishedAt ?? undefined}
-									readingTime={getReadingTime(post.data.content)}
-									tags={tags}
-									bylines={bylines}
-								/>
-							))}
-						</div>
-					</section>
-				)}
-			</div>
-		)
-	}
-</Base>
+  {/* Signature Dishes */}
+  <section class="py-24 md:py-32 px-6 md:px-12 bg-sand-50">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
+        <div class="max-w-2xl">
+          <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-6">Signature Dishes</h2>
+          <p class="text-lg text-sand-800 leading-relaxed text-balance">
+            Klassiker, die bleiben. Gerichte, die meine Philosophie von Produktfokus und handwerklicher Tiefe auf den Punkt bringen.
+          </p>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {dishes.map(dish => (
+          <div class="group cursor-pointer">
+            <div class="aspect-[4/5] overflow-hidden rounded-sm mb-6 bg-sand-200">
+              {dish.image && (
+                <Image 
+                  image={dish.image} 
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
+                />
+              )}
+            </div>
+            <div class="flex gap-2 text-xs font-medium uppercase tracking-wider text-terracotta mb-3">
+              <span>{dish.category}</span>
+            </div>
+            <h3 class="text-xl font-medium mb-3">{dish.title}</h3>
+            <p class="text-sand-800 text-sm leading-relaxed">{dish.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 
-<style>
-	.home-content {
-		max-width: var(--wide-width);
-		margin: 0 auto;
-		padding: var(--spacing-16) var(--spacing-6);
-	}
+  {/* News */}
+  <section class="py-24 md:py-32 px-6 md:px-12 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-16 text-center">Aktuelles & Presse</h2>
+      
+      <div class="flex flex-col divide-y divide-sand-200 border-y border-sand-200">
+        {sortedNews.map(item => (
+          <article class="py-8 group cursor-pointer">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-baseline">
+              <div class="md:col-span-3 text-sm text-sand-500 font-medium">
+                {item.date}
+              </div>
+              <div class="md:col-span-8">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-xs font-medium uppercase tracking-wider text-terracotta">{item.publication}</span>
+                  {item.tag && (
+                    <>
+                      <span class="w-1 h-1 rounded-full bg-sand-300"></span>
+                      <span class="text-xs font-medium uppercase tracking-wider text-sand-500">{item.tag}</span>
+                    </>
+                  )}
+                </div>
+                <h3 class="text-xl md:text-2xl font-medium mb-3 group-hover:text-terracotta transition-colors">{item.title}</h3>
+                <p class="text-sand-800 leading-relaxed">{item.body}</p>
+              </div>
+              <div class="hidden md:flex justify-end md:col-span-1 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+                <TzArrow className="w-6 h-6 text-terracotta" />
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
-	/* Featured Section - Side by side */
-	.featured-section {
-		margin-bottom: var(--spacing-16);
-	}
-
-	.featured-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--spacing-8);
-		align-items: center;
-	}
-
-	.featured-image-link {
-		grid-column: 1 / 3;
-		display: block;
-		/* Extend to viewport edge, but cap at -6rem minimum extension */
-		margin-left: min(
-			-6rem,
-			calc(-1 * (var(--spacing-6) + (100vw - var(--wide-width)) / 2))
-		);
-	}
-
-	.featured-image {
-		overflow: hidden;
-		border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-		background: var(--color-surface);
-	}
-
-	.featured-image img {
-		width: 100%;
-		height: auto;
-		aspect-ratio: 4 / 3;
-		object-fit: cover;
-		transition: transform 0.4s ease;
-	}
-
-	.featured-image-link:hover .featured-image img,
-	.featured-grid:has(.featured-title-link:hover) .featured-image img {
-		transform: scale(1.02);
-	}
-
-	.featured-content {
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-4);
-	}
-
-	.featured-meta {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		column-gap: var(--spacing-3);
-		row-gap: var(--spacing-1);
-		font-size: var(--font-size-sm);
-		color: var(--color-muted);
-	}
-
-	.meta-dot {
-		width: 3px;
-		height: 3px;
-		border-radius: 50%;
-		background: var(--color-muted);
-	}
-
-	/* Featured bylines */
-	.featured-bylines {
-		display: flex;
-		align-items: center;
-		gap: 2px;
-	}
-
-	.featured-byline {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-2);
-	}
-
-	.featured-byline-avatar {
-		width: var(--avatar-size-md);
-		height: var(--avatar-size-md);
-		border-radius: 50%;
-		object-fit: cover;
-	}
-
-	.featured-byline-name {
-		font-weight: 500;
-		color: var(--color-text-secondary);
-	}
-
-	.byline-sep {
-		color: var(--color-muted);
-		margin-right: 2px;
-	}
-
-	.byline-more {
-		font-size: var(--font-size-xs);
-		color: var(--color-muted);
-		margin-left: 2px;
-	}
-
-	.featured-title-link {
-		text-decoration: none;
-		color: inherit;
-	}
-
-	.featured-title {
-		font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
-		font-weight: 700;
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		transition: color var(--transition-fast);
-	}
-
-	.featured-title-link:hover .featured-title,
-	.featured-grid:has(.featured-image-link:hover) .featured-title {
-		color: var(--color-accent);
-	}
-
-	.featured-excerpt {
-		font-size: var(--font-size-lg);
-		line-height: var(--leading-relaxed);
-		color: var(--color-text-secondary);
-	}
-
-	.featured-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--spacing-2);
-		margin-top: var(--spacing-2);
-	}
-
-	.featured-tag {
-		display: inline-block;
-		padding: var(--spacing-1) var(--spacing-3);
-		font-size: var(--font-size-sm);
-		color: var(--color-text-secondary);
-		background: var(--color-surface);
-		border-radius: var(--radius);
-		text-decoration: none;
-		transition:
-			color var(--transition-fast),
-			background var(--transition-fast);
-	}
-
-	.featured-tag:hover {
-		color: var(--color-text);
-		background: var(--color-border);
-	}
-
-	/* Section header */
-	.section-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		margin-bottom: var(--spacing-8);
-		padding-bottom: var(--spacing-4);
-		border-bottom: 1px solid var(--color-border-subtle);
-	}
-
-	.section-title {
-		font-size: var(--font-size-sm);
-		font-weight: 500;
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-wider);
-		color: var(--color-muted);
-	}
-
-	.section-link {
-		font-size: var(--font-size-sm);
-		color: var(--color-accent);
-		text-decoration: none;
-		transition: color var(--transition-fast);
-	}
-
-	.section-link:hover {
-		color: var(--color-accent-hover);
-	}
-
-	/* Posts Grid */
-	.posts-section {
-	}
-
-	.posts-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--spacing-12) var(--spacing-8);
-	}
-
-	/* Empty State */
-	.empty-state {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: var(--spacing-3);
-		text-align: center;
-		padding: var(--spacing-20) var(--spacing-6);
-		max-width: 400px;
-		margin: 0 auto;
-	}
-
-	.empty-state h2 {
-		font-size: var(--font-size-2xl);
-		font-weight: 600;
-	}
-
-	.empty-state p {
-		color: var(--color-muted);
-	}
-
-	.btn {
-		display: inline-block;
-		margin-top: var(--spacing-4);
-		padding: var(--spacing-3) var(--spacing-6);
-		background: var(--color-accent);
-		color: var(--color-on-accent);
-		text-decoration: none;
-		border-radius: var(--radius);
-		font-size: var(--font-size-sm);
-		font-weight: 500;
-		transition: background var(--transition-fast);
-	}
-
-	.btn:hover {
-		background: var(--color-accent-hover);
-	}
-
-	/* Responsive */
-	@media (max-width: 900px) {
-		.home-content {
-			padding: var(--spacing-6) var(--spacing-4) var(--spacing-12);
-		}
-
-		.featured-image-link {
-			margin-left: 0;
-		}
-
-		.featured-grid {
-			grid-template-columns: 1fr;
-			gap: var(--spacing-6);
-		}
-
-		.featured-image {
-			border-radius: var(--radius-lg);
-		}
-
-		.featured-image img {
-			aspect-ratio: 16 / 9;
-		}
-
-		.posts-grid {
-			grid-template-columns: repeat(2, 1fr);
-			gap: var(--spacing-8) var(--spacing-6);
-		}
-	}
-
-	@media (max-width: 600px) {
-		.featured-title {
-			font-size: var(--font-size-2xl);
-		}
-
-		.posts-grid {
-			grid-template-columns: 1fr;
-			gap: var(--spacing-8);
-		}
-	}
-</style>
+  {/* Offers */}
+  <section id="angebote" class="py-24 md:py-32 px-6 md:px-12 bg-sand-950 text-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+        <div>
+          <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-8">Angebote</h2>
+          <p class="text-xl text-sand-300 leading-relaxed mb-12 text-balance">
+            Vom exklusiven Catering bis zur ganzheitlichen Konzeptberatung für die Gastronomie.
+          </p>
+          
+          <div class="flex flex-col gap-12">
+            {offers.filter(o => !o.featured).map(offer => (
+              <div class="border-t border-white/10 pt-8">
+                <h3 class="text-2xl font-medium mb-4">{offer.title}</h3>
+                <p class="text-sand-300 font-medium mb-3">{offer.lead}</p>
+                <p class="text-sand-400 mb-6 leading-relaxed">{offer.body}</p>
+                <a href="#kontakt" class="inline-flex items-center gap-2 text-terracotta hover:text-white transition-colors font-medium">
+                  {offer.cta_text || 'Anfragen'} <TzArrow className="w-4 h-4" />
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {featuredOffers.map(offer => (
+          <div class="relative group h-[600px] lg:h-auto rounded-sm overflow-hidden" id="restaurant">
+            {offer.image && (
+              <Image 
+                image={offer.image} 
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                sizes="(min-width: 1024px) 50vw, 100vw"
+              />
+            )}
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-8 md:p-12">
+              <span class="inline-block px-3 py-1 bg-terracotta text-white text-xs font-medium uppercase tracking-widest mb-4">
+                Featured
+              </span>
+              <h3 class="text-3xl md:text-4xl font-medium mb-4">{offer.title}</h3>
+              <p class="text-sand-200 text-lg mb-8 max-w-md">{offer.body}</p>
+              <a href="#kontakt" class="px-8 py-4 bg-white text-sand-950 font-medium rounded-full hover:bg-sand-100 transition-colors inline-block">
+                {offer.cta_text || 'Tisch reservieren'}
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

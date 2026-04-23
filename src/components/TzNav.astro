@@ -1,0 +1,23 @@
+---
+import TzLogo from './TzLogo.astro';
+---
+<nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 flex justify-between items-center bg-sand-50/80 backdrop-blur-md border-b border-sand-200/50">
+  <TzLogo />
+  
+  {/* Desktop Nav */}
+  <div class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide">
+    <a href="/" class="hover:text-terracotta transition-colors">Start</a>
+    <a href="/stationen" class="hover:text-terracotta transition-colors">Stationen</a>
+    <a href="/#philosophie" class="hover:text-terracotta transition-colors">Philosophie</a>
+    <a href="/#restaurant" class="hover:text-terracotta transition-colors">Restaurant</a>
+    <a href="/#kontakt" class="px-5 py-2.5 bg-forest-900 text-white hover:bg-forest-800 transition-colors rounded-full">
+      Kontakt
+    </a>
+  </div>
+  
+  {/* Mobile Nav Button (Simplified for Astro) */}
+  <button class="md:hidden flex flex-col gap-1.5 p-2">
+    <span class="w-6 h-0.5 bg-current"></span>
+    <span class="w-6 h-0.5 bg-current"></span>
+  </button>
+</nav>

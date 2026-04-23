@@ -1,0 +1,9 @@
+---
+interface Props {
+  className?: string;
+}
+const { className = "" } = Astro.props;
+---
+<a href="/" class={`inline-block font-sans font-medium tracking-tight text-xl ${className}`}>
+  titz<span class="text-terracotta">.</span>cooking
+</a>
