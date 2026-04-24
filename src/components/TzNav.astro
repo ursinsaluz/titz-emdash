@@ -1,23 +1,44 @@
 ---
 import TzLogo from './TzLogo.astro';
+import { getEmDashCollection, getMenu } from 'emdash';
+import { Image } from 'emdash/ui';
+
+// Fetch global theme settings and primary menu
+const { entries: themeSettings } = await getEmDashCollection("theme_settings");
+const config = themeSettings[0]?.data || {};
+
+const primaryMenu = await getMenu("primary");
+
+// EmDash Logo or Fallback to TzLogo
+const siteName = config.site_name || "titz.cooking";
+const ctaText = config.header_cta_text || "Kontakt";
+const ctaUrl = config.header_cta_url || "/#kontakt";
 ---
-<nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 flex justify-between items-center bg-sand-50/80 backdrop-blur-md border-b border-sand-200/50">
-  <TzLogo />
+<nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex justify-between items-center bg-sand-50/90 backdrop-blur-lg border-b border-sand-200/50 shadow-sm transition-all duration-300">
+  <a href="/" class="flex items-center gap-3 group" aria-label={siteName}>
+    {config.logo ? (
+      <Image image={config.logo} class="h-8 w-auto object-contain" />
+    ) : (
+      <TzLogo />
+    )}
+    {config.logo && <span class="sr-only">{siteName}</span>}
+  </a>
   
-  {/* Desktop Nav */}
+  {/* Desktop Nav - Claude Code Design (clean, minimalist, slightly subdued text) */}
   <div class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide">
-    <a href="/" class="hover:text-terracotta transition-colors">Start</a>
-    <a href="/stationen" class="hover:text-terracotta transition-colors">Stationen</a>
-    <a href="/#philosophie" class="hover:text-terracotta transition-colors">Philosophie</a>
-    <a href="/#restaurant" class="hover:text-terracotta transition-colors">Restaurant</a>
-    <a href="/#kontakt" class="px-5 py-2.5 bg-forest-900 text-white hover:bg-forest-800 transition-colors rounded-full">
-      Kontakt
+    {primaryMenu?.items.map(item => (
+      <a href={item.url} target={item.target} class="text-sand-600 hover:text-sand-950 transition-colors">
+        {item.label}
+      </a>
+    ))}
+    <a href={ctaUrl} class="px-6 py-2.5 bg-sand-900 text-sand-50 hover:bg-sand-800 transition-colors rounded-full shadow-sm ml-2">
+      {ctaText}
     </a>
   </div>
   
-  {/* Mobile Nav Button (Simplified for Astro) */}
-  <button class="md:hidden flex flex-col gap-1.5 p-2">
-    <span class="w-6 h-0.5 bg-current"></span>
-    <span class="w-6 h-0.5 bg-current"></span>
+  {/* Mobile Nav Button */}
+  <button class="md:hidden flex flex-col gap-1.5 p-2 text-sand-800 hover:text-sand-950 transition-colors">
+    <span class="w-6 h-[2px] bg-current rounded-full"></span>
+    <span class="w-6 h-[2px] bg-current rounded-full"></span>
   </button>
 </nav>

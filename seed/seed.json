@@ -15,7 +15,12 @@
 			"slug": "pages",
 			"label": "Pages",
 			"labelSingular": "Page",
-			"supports": ["drafts", "revisions", "search", "seo"],
+			"supports": [
+				"drafts",
+				"revisions",
+				"search",
+				"seo"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -36,7 +41,11 @@
 			"slug": "dishes",
 			"label": "Signature Dishes",
 			"labelSingular": "Dish",
-			"supports": ["drafts", "revisions", "search"],
+			"supports": [
+				"drafts",
+				"revisions",
+				"search"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -72,7 +81,11 @@
 			"slug": "news",
 			"label": "News & Press",
 			"labelSingular": "News Item",
-			"supports": ["drafts", "revisions", "search"],
+			"supports": [
+				"drafts",
+				"revisions",
+				"search"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -108,7 +121,11 @@
 			"slug": "offers",
 			"label": "Offers",
 			"labelSingular": "Offer",
-			"supports": ["drafts", "revisions", "search"],
+			"supports": [
+				"drafts",
+				"revisions",
+				"search"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -150,7 +167,10 @@
 			"slug": "stations",
 			"label": "CV Stations",
 			"labelSingular": "Station",
-			"supports": ["drafts", "revisions"],
+			"supports": [
+				"drafts",
+				"revisions"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -199,7 +219,9 @@
 			"slug": "education",
 			"label": "Education",
 			"labelSingular": "Education Item",
-			"supports": ["drafts"],
+			"supports": [
+				"drafts"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -228,7 +250,9 @@
 			"slug": "qualifications",
 			"label": "Qualifications",
 			"labelSingular": "Qualification",
-			"supports": ["drafts"],
+			"supports": [
+				"drafts"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -257,7 +281,9 @@
 			"slug": "hobbies",
 			"label": "Hobbies",
 			"labelSingular": "Hobby",
-			"supports": ["drafts"],
+			"supports": [
+				"drafts"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -281,6 +307,56 @@
 					"type": "string"
 				}
 			]
+		},
+		{
+			"slug": "theme_settings",
+			"label": "Theme Settings",
+			"labelSingular": "Theme Setting",
+			"supports": [
+				"drafts"
+			],
+			"fields": [
+				{
+					"slug": "site_name",
+					"label": "Site Name",
+					"type": "string"
+				},
+				{
+					"slug": "logo",
+					"label": "Logo",
+					"type": "image"
+				},
+				{
+					"slug": "header_cta_text",
+					"label": "Header CTA Text",
+					"type": "string"
+				},
+				{
+					"slug": "header_cta_url",
+					"label": "Header CTA URL",
+					"type": "string"
+				},
+				{
+					"slug": "footer_description",
+					"label": "Footer Description",
+					"type": "text"
+				},
+				{
+					"slug": "footer_address",
+					"label": "Footer Address (HTML allowed)",
+					"type": "text"
+				},
+				{
+					"slug": "footer_copyright",
+					"label": "Footer Copyright",
+					"type": "string"
+				},
+				{
+					"slug": "footer_tagline",
+					"label": "Footer Tagline",
+					"type": "string"
+				}
+			]
 		}
 	],
 	"menus": [
@@ -288,11 +364,52 @@
 			"name": "primary",
 			"label": "Primary Navigation",
 			"items": [
-				{ "type": "custom", "label": "Start", "url": "/" },
-				{ "type": "custom", "label": "Stationen", "url": "/stationen" },
-				{ "type": "custom", "label": "Philosophie", "url": "/#philo" },
-				{ "type": "custom", "label": "Restaurant", "url": "/#pinot" },
-				{ "type": "custom", "label": "Kontakt", "url": "/#kontakt" }
+				{
+					"type": "custom",
+					"label": "Start",
+					"url": "/"
+				},
+				{
+					"type": "custom",
+					"label": "Stationen",
+					"url": "/stationen"
+				},
+				{
+					"type": "custom",
+					"label": "Philosophie",
+					"url": "/#philosophie"
+				},
+				{
+					"type": "custom",
+					"label": "Restaurant",
+					"url": "/#restaurant"
+				}
+			]
+		},
+		{
+			"name": "footer",
+			"label": "Footer Navigation",
+			"items": [
+				{
+					"type": "custom",
+					"label": "Start",
+					"url": "/"
+				},
+				{
+					"type": "custom",
+					"label": "Stationen",
+					"url": "/stationen"
+				},
+				{
+					"type": "custom",
+					"label": "Impressum",
+					"url": "/impressum"
+				},
+				{
+					"type": "custom",
+					"label": "Datenschutz",
+					"url": "/datenschutz"
+				}
 			]
 		}
 	],
@@ -304,6 +421,22 @@
 		"stations": [],
 		"education": [],
 		"qualifications": [],
-		"hobbies": []
+		"hobbies": [],
+		"theme_settings": [
+			{
+				"id": "global-theme-settings",
+				"slug": "global",
+				"status": "published",
+				"data": {
+					"site_name": "titz.cooking",
+					"header_cta_text": "Kontakt",
+					"header_cta_url": "/#kontakt",
+					"footer_description": "Kulinarik zwischen Michelin-Stern und Bündner Bodenständigkeit.\nSchnörkellose Gerichte mit Wow-Effekt.",
+					"footer_address": "Sebastian Titz\nc/o Restaurant Pinot\n7306 Fläsch\n\n<a href=\"mailto:info@titz.cooking\" class=\"hover:text-white transition-colors\">info@titz.cooking</a>",
+					"footer_copyright": "Sebastian Titz.",
+					"footer_tagline": "Handcrafted in Graubünden."
+				}
+			}
+		]
 	}
 }

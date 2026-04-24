@@ -6,3 +6,4 @@ data.db
 .env
 .env.*
 claude_code_design/
+.wrangler
