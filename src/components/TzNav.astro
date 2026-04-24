@@ -5,13 +5,22 @@ import { Image } from 'emdash/ui';
 
 // Fetch global theme settings and primary menu
 const { entries: themeSettings } = await getEmDashCollection("theme_settings");
-const config = themeSettings[0]?.data || {};
+
+interface ThemeSettings {
+	site_name?: string;
+	logo?: any;
+	header_cta_text?: string;
+	header_cta_url?: string;
+}
+
+const config = (themeSettings[0]?.data || {}) as ThemeSettings;
 
 const primaryMenu = await getMenu("main");
 
-const siteName = config.site_name || "titz.cooking";
-const ctaText = config.header_cta_text || "Kontakt";
-const ctaUrl = config.header_cta_url || "/#kontakt";
+const siteName: string = config.site_name || "titz.cooking";
+const ctaText: string = config.header_cta_text || "Kontakt";
+const ctaUrl: string = config.header_cta_url || "/#kontakt";
+
 ---
 
 <nav

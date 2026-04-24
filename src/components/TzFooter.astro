@@ -4,7 +4,15 @@ import { getEmDashCollection, getMenu } from 'emdash';
 import { Image } from 'emdash/ui';
 
 const { entries: themeSettings } = await getEmDashCollection("theme_settings");
-const config = themeSettings[0]?.data || {};
+
+interface ThemeSettings {
+	footer_description?: string;
+	footer_address?: string;
+	footer_copyright?: string;
+	footer_tagline?: string;
+}
+
+const config = (themeSettings[0]?.data || {}) as ThemeSettings;
 
 const footerMenu = await getMenu("footer");
 
