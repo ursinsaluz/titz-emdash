@@ -4,14 +4,22 @@ import Base from "../layouts/Base.astro";
 
 <Base title="Seite nicht gefunden — titz.cooking">
   <section class="min-h-screen flex flex-col items-center justify-center px-6 text-center bg-[var(--paper)]">
-    <span class="tz-display text-[12rem] leading-none text-[var(--paper-3)] select-none" aria-hidden="true">404</span>
-    <h1 class="tz-display text-3xl md:text-5xl text-[var(--ink)] -mt-8 mb-6">Seite nicht gefunden</h1>
-    <p class="text-lg text-[var(--ink-3)] max-w-md text-balance mb-12">
-      Die gesuchte Seite existiert nicht oder wurde verschoben.
+    <div class="relative">
+      <span class="tz-display italic text-[15rem] md:text-[20rem] leading-none text-[var(--paper-3)] select-none opacity-50" aria-hidden="true">404</span>
+      <div class="absolute inset-0 flex flex-col items-center justify-center">
+        <h1 class="tz-display text-4xl md:text-6xl text-[var(--ink)] mb-6">Seite nicht gefunden</h1>
+        <p class="tz-mono text-[var(--ink-4)] text-[10px] tracking-[0.2em] uppercase">FEHLERMELDUNG</p>
+      </div>
+    </div>
+    
+    <p class="text-xl text-[var(--ink-2)] max-w-md text-balance mb-12 font-light italic tz-display mt-8">
+      Die gesuchte Seite existiert nicht oder wurde verschoben. Vielleicht finden Sie auf der Startseite, was Sie suchen.
     </p>
-    <div class="flex gap-4 flex-wrap justify-center">
-      <a href="/" class="tz-btn tz-btn-primary">Zurück zur Startseite</a>
-      <a href="/stationen" class="tz-btn tz-btn-ghost">Stationen</a>
+    
+    <div class="flex gap-6 flex-wrap justify-center">
+      <a href="/" class="tz-btn tz-btn-primary uppercase text-[10px] tracking-[0.2em]">Zurück zur Startseite</a>
+      <a href="/stationen" class="tz-btn tz-btn-ghost uppercase text-[10px] tracking-[0.2em]">Stationen</a>
     </div>
   </section>
 </Base>
+

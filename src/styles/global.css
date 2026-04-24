@@ -5,15 +5,15 @@
   --color-kuemmel: #ebe4d8;
   --color-muskat: #e2d9c8;
   --color-asche: #8c8578;
-  --color-pfeffer: #1a1a18;
+  --color-pfeffer: #1c1c1c; /* Refined to design spec */
   --color-piment: #2d2a25;
   --color-kardamom: #5a544a;
   --color-paprika: oklch(0.62 0.14 45);
   --color-safran: oklch(0.48 0.13 40);
   --color-chili-soft: oklch(0.92 0.04 55);
-  --color-thymian: oklch(0.38 0.04 140);
-  --color-rule: rgba(26, 26, 24, 0.14);
-  --color-rule-soft: rgba(26, 26, 24, 0.08);
+  --color-thymian: #3d4d3d; /* Refined to design spec */
+  --color-rule: rgba(28, 28, 28, 0.14); /* Refined to design spec */
+  --color-rule-soft: rgba(28, 28, 28, 0.08);
 
   --font-serif: "Fraunces", Georgia, serif;
   --font-sans: "Inter Tight", -apple-system, sans-serif;
@@ -38,6 +38,7 @@
     
     background-color: var(--paper);
     color: var(--ink);
+    font-size: 15px; /* Base font size from design spec */
   }
 
   body {
@@ -52,6 +53,7 @@
     @apply font-serif;
     font-optical-sizing: auto;
     font-variation-settings: "SOFT" 30, "WONK" 0;
+    line-height: 1.1;
   }
   .tz-display.italic,
   i.tz-display,
@@ -61,22 +63,27 @@
   }
 
   .tz-eyebrow {
-    @apply font-mono uppercase text-xs;
+    @apply font-mono uppercase text-[10px]; /* Refined to tag size */
     letter-spacing: 0.18em;
   }
 
+  .tz-mono {
+    @apply font-mono text-[12px];
+  }
+
   .tz-btn {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-full font-sans font-medium transition-colors duration-300;
+    @apply inline-flex items-center justify-center px-8 py-4 rounded-sm font-sans font-medium transition-all duration-300;
     transition-timing-function: var(--ease-tz);
+    letter-spacing: 0.02em;
   }
   .tz-btn-primary {
-    @apply bg-[var(--ink)] text-[var(--paper)] hover:bg-[var(--ink-2)];
+    @apply bg-[var(--ember)] text-white hover:bg-[var(--ember-deep)];
   }
   .tz-btn-ghost {
     @apply bg-transparent border border-[var(--ink)] text-[var(--ink)] hover:bg-[var(--rule-soft)];
   }
-  .tz-btn-ember {
-    @apply bg-[var(--ember)] text-[var(--paper)] hover:bg-[var(--ember-deep)];
+  .tz-btn-dark {
+    @apply bg-[var(--ink)] text-[var(--paper)] hover:bg-[var(--ink-2)];
   }
 
   .tz-link {
@@ -84,14 +91,15 @@
     transition-timing-function: var(--ease-tz);
   }
   .tz-link:hover {
-    @apply text-[var(--ember-deep)] border-[var(--ember-deep)];
+    @apply text-[var(--ember)] border-[var(--ember)];
   }
-  .tz-link::after {
-    content: "→";
-    @apply ml-1 opacity-0 -translate-x-2 transition-all duration-300;
+
+  .tz-section-number {
+    @apply tz-display italic text-[var(--ink-4)] text-2xl mr-4;
   }
-  .tz-link:hover::after {
-    @apply opacity-100 translate-x-0;
+
+  .tz-signature-dot {
+    @apply inline-block w-2 h-2 rounded-full bg-[var(--ember)] mr-2;
   }
 
   .tz-rule {
@@ -99,6 +107,66 @@
   }
   .tz-rule-soft {
     @apply border-t border-[var(--rule-soft)] w-full block;
+  }
+
+
+  /* PortableText / Rich Text Output
+   * Styles the raw HTML tags emitted by <PortableText />.
+   * Tailwind resets all base styles, so we re-apply them here.
+   * Scope to .prose-sm so these only affect CMS-rendered content. */
+  .prose-sm p {
+    margin-bottom: 0.75em;
+  }
+  .prose-sm p:last-child {
+    margin-bottom: 0;
+  }
+  .prose-sm strong {
+    font-weight: 600;
+  }
+  .prose-sm em {
+    font-style: italic;
+  }
+  .prose-sm a {
+    color: var(--ember);
+    border-bottom: 1px solid currentColor;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .prose-sm a:hover {
+    color: var(--ember-deep);
+  }
+  .prose-sm ul,
+  .prose-sm ol {
+    padding-left: 1.25em;
+    margin-bottom: 0.75em;
+  }
+  .prose-sm ul {
+    list-style-type: disc;
+  }
+  .prose-sm ol {
+    list-style-type: decimal;
+  }
+  .prose-sm li {
+    margin-bottom: 0.25em;
+  }
+  .prose-sm h2 {
+    @apply tz-display text-xl font-semibold mt-4 mb-2;
+  }
+  .prose-sm h3 {
+    @apply tz-display text-lg font-semibold mt-3 mb-2;
+  }
+  .prose-sm h4 {
+    @apply font-semibold mt-3 mb-1;
+  }
+  .prose-sm blockquote {
+    border-left: 2px solid var(--ember);
+    padding-left: 1em;
+    color: var(--ink-3);
+    font-style: italic;
+    margin: 0.75em 0;
+  }
+  .prose-sm code {
+    @apply font-mono text-xs bg-[var(--paper-3)] px-1 py-0.5 rounded;
   }
 }
 

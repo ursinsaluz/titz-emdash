@@ -8,3 +8,5 @@ data.db
 !.env.example
 claude_code_design/
 .wrangler
+titz.cooking.pdf
+.vscode

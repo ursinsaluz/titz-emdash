@@ -38,5 +38,11 @@
 			"persist": true,
 			"head_sampling_rate": 1
 		}
-	}
+	},
+	"send_email": [
+		{
+			"name": "SEND_EMAIL",
+			"destination_address": "ursin.saluz@gmail.com"
+		}
+	]
 }

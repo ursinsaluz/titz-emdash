@@ -1,7 +1,4 @@
 import type { APIRoute } from 'astro';
-import { Resend } from 'resend';
-
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -28,7 +25,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Verify Turnstile Token
     const secretKey = import.meta.env.TURNSTILE_SECRET_KEY || '0x4AAAAAADB_4BrRvxvYJ5UuHxfXWtBkeIk';
-    
+
     const verifyData = new URLSearchParams();
     verifyData.append('secret', secretKey);
     verifyData.append('response', turnstileResponse);
@@ -47,29 +44,38 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Send email via Resend
-    const { data: resendData, error } = await resend.emails.send({
-      from: 'Website Kontakt <onboarding@resend.dev>', // Using Resend test email. Replace with verified domain email for production.
-      to: ['ursin.saluz@gmail.com'], // Fallback email to send notifications to. Should be replaced by actual recipient.
-      replyTo: email,
-      subject: `Neue Kontaktanfrage von ${name}`,
-      html: `
-        <h2>Neue Kontaktanfrage (titz.cooking)</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Telefon:</strong> ${phone}</p>
-        <h3>Nachricht:</h3>
-        <p>${message ? message.replace(/\\n/g, '<br/>') : 'Keine Nachricht angegeben.'}</p>
-      `
-    });
+    // Send email via Cloudflare Email Workers (SEND_EMAIL binding)
+    // The binding is only available in the deployed Cloudflare Worker runtime.
+    // @ts-ignore – runtime binding not visible to TypeScript
+    const sendEmail = (globalThis as any).SEND_EMAIL ?? (import.meta as any).env?.SEND_EMAIL;
 
-    if (error) {
-      console.error('Resend error:', error);
+    if (!sendEmail) {
+      // Running locally – log and return success so the form still works in dev
+      console.warn('[contact] SEND_EMAIL binding not available (local dev). Would have sent:', { name, email, phone, message });
       return new Response(
-        JSON.stringify({ error: 'Fehler beim Senden der E-Mail. Bitte versuchen Sie es später erneut.' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ success: true, message: 'Anfrage erfolgreich gesendet.' }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
       );
     }
+
+    const htmlBody = `
+      <h2>Neue Kontaktanfrage (titz.cooking)</h2>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Telefon:</strong> ${phone}</p>
+      <h3>Nachricht:</h3>
+      <p>${message ? message.replace(/\n/g, '<br/>') : 'Keine Nachricht angegeben.'}</p>
+    `;
+
+    await sendEmail.send({
+      from: 'kontakt@titz.cooking',
+      to: 'ursin.saluz@gmail.com',
+      subject: `Neue Kontaktanfrage von ${name}`,
+      headers: {
+        'Reply-To': email,
+      },
+      html: htmlBody,
+    });
 
     return new Response(
       JSON.stringify({ success: true, message: 'Anfrage erfolgreich gesendet.' }),

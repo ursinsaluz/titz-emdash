@@ -30,112 +30,66 @@ const results = query ? allPosts.filter((p) => matchesQuery(p, query)) : [];
 	title={query ? `Search: ${query}` : "Search"}
 	description="Search blog posts"
 >
-	<section class="search-page">
-		<h1 class="search-title">Search</h1>
+<Base
+	title={query ? `Suche: ${query}` : "Suche"}
+	description="Suche auf titz.cooking"
+>
+	<section class="pt-48 pb-32 px-6 md:px-12 bg-[var(--paper)]">
+		<div class="max-w-7xl mx-auto">
+			<div class="flex items-center gap-6 mb-24 border-b border-[var(--rule)] pb-12">
+				<span class="tz-section-number">§ 07</span>
+				<h1 class="tz-display text-5xl md:text-8xl">Suche</h1>
+			</div>
 
-		<form method="get" action="/search" class="search-form">
-			<input
-				type="search"
-				name="q"
-				value={query}
-				placeholder="Search posts..."
-				class="search-input"
-				autofocus
-			/>
-			<button type="submit" class="search-button">Search</button>
-		</form>
+			<div class="max-w-3xl">
+				<form method="get" action="/search" class="flex gap-4 mb-16 border-b border-[var(--rule)] pb-4 focus-within:border-[var(--ember)] transition-colors">
+					<input
+						type="search"
+						name="q"
+						value={query}
+						placeholder="Suchbegriff eingeben..."
+						class="flex-1 bg-transparent focus:outline-none text-2xl font-light italic tz-display placeholder-[var(--ink-4)]/50"
+						autofocus
+					/>
+					<button type="submit" class="tz-mono text-[10px] tracking-[0.2em] uppercase hover:text-[var(--ember)] transition-colors">Suchen</button>
+				</form>
 
-		{
-			query && (
-				<p class="search-summary">
-					{results.length === 0
-						? `No results for "${query}"`
-						: `${results.length} result${results.length === 1 ? "" : "s"} for "${query}"`}
-				</p>
-			)
-		}
+				{
+					query && (
+						<div class="mb-16">
+							<p class="tz-mono text-[var(--ink-4)] text-[10px] tracking-[0.2em] uppercase mb-4">
+								{results.length === 0
+									? `Keine Treffer für "${query}"`
+									: `${results.length} Ergebnis${results.length === 1 ? "" : "se"} für "${query}"`}
+							</p>
+							<span class="block tz-rule-soft"></span>
+						</div>
+					)
+				}
 
-		{
-			results.length > 0 && (
-				<div class="search-results">
-					{results.map((post) => (
-						<PostCard
-							title={post.data.title}
-							excerpt={post.data.excerpt}
-							featuredImage={post.data.featured_image}
-							href={`/posts/${post.id}`}
-							date={post.data.publishedAt ?? undefined}
-							readingTime={getReadingTime(post.data.content)}
-						/>
-					))}
-				</div>
-			)
-		}
+				{
+					results.length > 0 && (
+						<div class="flex flex-col gap-12">
+							{results.map((post) => (
+								<a href={`/posts/${post.id}`} class="group border-b border-[var(--rule-soft)] pb-12 last:border-0 hover:border-[var(--ember)] transition-colors">
+									<article>
+										<div class="flex items-center gap-4 mb-4">
+											<span class="tz-mono text-[10px] text-[var(--ink-4)] uppercase tracking-widest">{post.data.publishedAt}</span>
+											<span class="w-1 h-1 rounded-full bg-[var(--ember)]"></span>
+											<span class="tz-mono text-[10px] text-[var(--moss)] uppercase tracking-widest">{getReadingTime(post.data.content)}</span>
+										</div>
+										<h3 class="tz-display text-3xl md:text-4xl group-hover:italic transition-all duration-300">{post.data.title}</h3>
+										<p class="text-[var(--ink-2)] mt-4 font-light leading-relaxed line-clamp-2 max-w-2xl">{post.data.excerpt}</p>
+									</article>
+								</a>
+							))}
+						</div>
+					)
+				}
 
-		{!query && <p class="search-hint">Enter a search term to find posts.</p>}
+				{!query && <p class="text-xl text-[var(--ink-3)] font-light italic tz-display">Bitte geben Sie einen Suchbegriff ein, um Beiträge zu finden.</p>}
+			</div>
+		</div>
 	</section>
 </Base>
 
-<style>
-	.search-page {
-		max-width: var(--max-width);
-		margin: 0 auto;
-		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
-	}
-
-	.search-title {
-		font-size: var(--font-size-2xl);
-		margin-bottom: var(--spacing-6);
-	}
-
-	.search-form {
-		display: flex;
-		gap: var(--spacing-2);
-		margin-bottom: var(--spacing-8);
-	}
-
-	.search-input {
-		flex: 1;
-		padding: var(--spacing-2) var(--spacing-4);
-		font-size: var(--font-size-base);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius);
-		background: var(--color-bg);
-		color: var(--color-text);
-	}
-
-	.search-input:focus {
-		outline: none;
-		border-color: var(--color-accent);
-	}
-
-	.search-button {
-		padding: var(--spacing-2) var(--spacing-6);
-		font-size: var(--font-size-base);
-		background: var(--color-accent);
-		color: var(--color-on-accent);
-		border: none;
-		border-radius: var(--radius);
-		cursor: pointer;
-		font-weight: 500;
-	}
-
-	.search-button:hover {
-		opacity: 0.9;
-	}
-
-	.search-summary {
-		color: var(--color-muted);
-		margin-bottom: var(--spacing-6);
-	}
-
-	.search-hint {
-		color: var(--color-muted);
-	}
-
-	.search-results {
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-8);
-	}
-</style>
