@@ -9,12 +9,16 @@ const config = themeSettings[0]?.data || {};
 
 const primaryMenu = await getMenu("primary");
 
-// EmDash Logo or Fallback to TzLogo
 const siteName = config.site_name || "titz.cooking";
 const ctaText = config.header_cta_text || "Kontakt";
 const ctaUrl = config.header_cta_url || "/#kontakt";
 ---
-<nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex justify-between items-center bg-sand-50/90 backdrop-blur-lg border-b border-sand-200/50 shadow-sm transition-all duration-300">
+
+<nav
+  id="tz-nav"
+  class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex justify-between items-center bg-[var(--paper)]/90 backdrop-blur-lg border-b border-[var(--rule-soft)] transition-all duration-300"
+  style="transition-timing-function: var(--ease-tz)"
+>
   <a href="/" class="flex items-center gap-3 group" aria-label={siteName}>
     {config.logo ? (
       <Image image={config.logo} class="h-8 w-auto object-contain" />
@@ -23,22 +27,97 @@ const ctaUrl = config.header_cta_url || "/#kontakt";
     )}
     {config.logo && <span class="sr-only">{siteName}</span>}
   </a>
-  
-  {/* Desktop Nav - Claude Code Design (clean, minimalist, slightly subdued text) */}
-  <div class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide">
+
+  {/* Desktop Nav */}
+  <div class="hidden md:flex gap-8 items-center text-sm font-sans font-medium tracking-wide">
     {primaryMenu?.items.map(item => (
-      <a href={item.url} target={item.target} class="text-sand-600 hover:text-sand-950 transition-colors">
+      <a href={item.url} target={item.target} class="text-[var(--ink-2)] hover:text-[var(--ember)] transition-colors duration-300" style="transition-timing-function: var(--ease-tz)">
         {item.label}
       </a>
     ))}
-    <a href={ctaUrl} class="px-6 py-2.5 bg-sand-900 text-sand-50 hover:bg-sand-800 transition-colors rounded-full shadow-sm ml-2">
+    <a href={ctaUrl} class="tz-btn tz-btn-primary py-2 px-5 text-sm ml-2">
       {ctaText}
     </a>
   </div>
-  
-  {/* Mobile Nav Button */}
-  <button class="md:hidden flex flex-col gap-1.5 p-2 text-sand-800 hover:text-sand-950 transition-colors">
-    <span class="w-6 h-[2px] bg-current rounded-full"></span>
-    <span class="w-6 h-[2px] bg-current rounded-full"></span>
+
+  {/* Mobile Hamburger */}
+  <button
+    id="tz-menu-toggle"
+    class="md:hidden flex flex-col gap-[5px] p-2 text-[var(--ink)] hover:text-[var(--ember)] transition-colors duration-300"
+    aria-label="Menü öffnen"
+    aria-expanded="false"
+    aria-controls="tz-mobile-menu"
+  >
+    <span class="block w-6 h-[1.5px] bg-current transition-all duration-300 origin-center" id="bar1"></span>
+    <span class="block w-6 h-[1.5px] bg-current transition-all duration-300" id="bar2"></span>
   </button>
 </nav>
+
+{/* Mobile Menu Overlay */}
+<div
+  id="tz-mobile-menu"
+  class="fixed inset-0 z-40 bg-[var(--paper)] flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"
+  style="transition-timing-function: var(--ease-tz)"
+>
+  <div class="flex flex-col gap-8 mt-20">
+    {primaryMenu?.items.map(item => (
+      <a
+        href={item.url}
+        target={item.target}
+        class="tz-display text-4xl text-[var(--ink)] hover:text-[var(--ember)] transition-colors duration-300 mobile-nav-link"
+      >
+        {item.label}
+      </a>
+    ))}
+    <a href={ctaUrl} class="tz-btn tz-btn-ember w-fit mt-4 mobile-nav-link">
+      {ctaText}
+    </a>
+  </div>
+
+  <div class="mt-auto pb-12 border-t border-[var(--rule-soft)] pt-8">
+    <span class="tz-eyebrow text-[var(--ink-4)]">{siteName}</span>
+  </div>
+</div>
+
+<script>
+  const toggle = document.getElementById('tz-menu-toggle');
+  const menu = document.getElementById('tz-mobile-menu');
+  const bar1 = document.getElementById('bar1');
+  const bar2 = document.getElementById('bar2');
+
+  let isOpen = false;
+
+  function openMenu() {
+    isOpen = true;
+    menu!.classList.remove('opacity-0', 'pointer-events-none');
+    menu!.classList.add('opacity-100');
+    toggle!.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    bar1!.style.transform = 'translateY(3.5px) rotate(45deg)';
+    bar2!.style.transform = 'translateY(-3.5px) rotate(-45deg)';
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    menu!.classList.add('opacity-0', 'pointer-events-none');
+    menu!.classList.remove('opacity-100');
+    toggle!.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    bar1!.style.transform = '';
+    bar2!.style.transform = '';
+  }
+
+  toggle?.addEventListener('click', () => {
+    if (isOpen) closeMenu(); else openMenu();
+  });
+
+  // Close when a nav link is clicked
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && isOpen) closeMenu();
+  });
+</script>

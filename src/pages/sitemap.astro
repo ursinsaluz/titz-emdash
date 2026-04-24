@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/Base.astro';
+
+// All pages listed manually; extend as new pages are added
+const sections = [
+  {
+    title: "Hauptseiten",
+    pages: [
+      { label: "Startseite", url: "/", description: "Hero, Signature Dishes, Aktuelles, Angebote & Kontakt" },
+      { label: "Stationen", url: "/stationen", description: "Vita, Ausbildung, Qualifikationen & Ausgleich" },
+      { label: "Impressum", url: "/impressum", description: "Rechtliche Angaben & Datenschutz" },
+      { label: "Sitemap", url: "/sitemap", description: "Diese Seite" },
+    ],
+  },
+  {
+    title: "Abschnitte auf der Startseite",
+    pages: [
+      { label: "Signature Dishes", url: "/#dishes", description: "Klassiker und Philosophie" },
+      { label: "Aktuelles & Presse", url: "/#news", description: "News und Presseartikel" },
+      { label: "Angebote & Restaurant", url: "/#angebote", description: "Catering, Beratung und Restaurant Pinot" },
+      { label: "Kontakt", url: "/#kontakt", description: "Anfragen und Reservierungen" },
+    ],
+  },
+];
+---
+
+<BaseLayout title="Sitemap — titz.cooking" description="Übersicht aller Seiten auf titz.cooking.">
+  <section class="pt-40 pb-24 px-6 md:px-12 bg-[var(--paper)]">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-4 mb-8">
+        <span class="w-12 h-[1px] bg-[var(--ember)]"></span>
+        <span class="tz-eyebrow text-[var(--ember)]">Navigation</span>
+      </div>
+      <h1 class="tz-display text-5xl md:text-7xl mb-16">Sitemap</h1>
+
+      <div class="space-y-16">
+        {sections.map(section => (
+          <div>
+            <h2 class="tz-eyebrow text-[var(--ink-4)] mb-8">{section.title}</h2>
+            <ul class="flex flex-col divide-y divide-[var(--rule-soft)]">
+              {section.pages.map(page => (
+                <li>
+                  <a
+                    href={page.url}
+                    class="group flex items-baseline justify-between gap-8 py-6 hover:text-[var(--ember)] transition-colors duration-300"
+                    style="transition-timing-function: var(--ease-tz)"
+                  >
+                    <div class="flex flex-col gap-1">
+                      <span class="tz-display text-xl text-[var(--ink)] group-hover:text-[var(--ember)] transition-colors duration-300">{page.label}</span>
+                      <span class="text-sm text-[var(--ink-4)]">{page.description}</span>
+                    </div>
+                    <span class="shrink-0 text-[var(--ink-4)] group-hover:text-[var(--ember)] transition-all duration-300 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <div class="pt-16">
+        <a href="/" class="tz-btn tz-btn-ghost">← Zurück zur Startseite</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

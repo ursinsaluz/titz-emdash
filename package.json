@@ -35,6 +35,9 @@
 	"overrides": {
 		"@emdash-cms/plugin-forms": {
 			"emdash": "$emdash"
+		},
+		"emdash-plugin-resend": {
+			"emdash": "$emdash"
 		}
 	},
 	"devDependencies": {

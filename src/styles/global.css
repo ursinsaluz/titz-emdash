@@ -1,52 +1,119 @@
 @import "tailwindcss";
 
 @theme {
-  --color-sand-50: #F9F8F6;
-  --color-sand-100: #F2EFE9;
-  --color-sand-200: #E6E1D6;
-  --color-sand-300: #D5CEC4;
-  --color-sand-400: #A8A196;
-  --color-sand-500: #8C867D;
-  --color-sand-800: #4A463F;
-  --color-sand-900: #2C2A26;
-  --color-sand-950: #1A1816;
+  --color-salz: #f4efe7;
+  --color-kuemmel: #ebe4d8;
+  --color-muskat: #e2d9c8;
+  --color-asche: #8c8578;
+  --color-pfeffer: #1a1a18;
+  --color-piment: #2d2a25;
+  --color-kardamom: #5a544a;
+  --color-paprika: oklch(0.62 0.14 45);
+  --color-safran: oklch(0.48 0.13 40);
+  --color-chili-soft: oklch(0.92 0.04 55);
+  --color-thymian: oklch(0.38 0.04 140);
+  --color-rule: rgba(26, 26, 24, 0.14);
+  --color-rule-soft: rgba(26, 26, 24, 0.08);
 
-  --color-forest-800: #1C2B23;
-  --color-forest-900: #111A15;
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Inter Tight", -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --color-terracotta: #A64B3B;
-
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
-  --radius-full: 9999px;
+  --ease-tz: cubic-bezier(.2,.7,.2,1);
 }
 
 @layer base {
   :root {
-    --color-background: var(--color-sand-50);
-    --color-foreground: var(--color-sand-950);
-  }
-
-  * {
-    @apply border-sand-200;
+    --paper: var(--color-salz);
+    --paper-2: var(--color-kuemmel);
+    --paper-3: var(--color-muskat);
+    --ink: var(--color-pfeffer);
+    --ink-2: var(--color-piment);
+    --ink-3: var(--color-kardamom);
+    --ink-4: var(--color-asche);
+    --ember: var(--color-paprika);
+    --ember-deep: var(--color-safran);
+    --ember-soft: var(--color-chili-soft);
+    --moss: var(--color-thymian);
+    
+    background-color: var(--paper);
+    color: var(--ink);
   }
 
   body {
-    @apply bg-[var(--color-background)] text-[var(--color-foreground)] font-sans antialiased;
+    @apply font-sans antialiased;
+    background-color: var(--paper);
+    color: var(--ink);
+  }
+}
+
+@layer components {
+  .tz-display {
+    @apply font-serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 30, "WONK" 0;
+  }
+  .tz-display.italic,
+  i.tz-display,
+  em.tz-display {
+    font-style: italic;
+    font-variation-settings: "SOFT" 50, "WONK" 1;
+  }
+
+  .tz-eyebrow {
+    @apply font-mono uppercase text-xs;
+    letter-spacing: 0.18em;
+  }
+
+  .tz-btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full font-sans font-medium transition-colors duration-300;
+    transition-timing-function: var(--ease-tz);
+  }
+  .tz-btn-primary {
+    @apply bg-[var(--ink)] text-[var(--paper)] hover:bg-[var(--ink-2)];
+  }
+  .tz-btn-ghost {
+    @apply bg-transparent border border-[var(--ink)] text-[var(--ink)] hover:bg-[var(--rule-soft)];
+  }
+  .tz-btn-ember {
+    @apply bg-[var(--ember)] text-[var(--paper)] hover:bg-[var(--ember-deep)];
+  }
+
+  .tz-link {
+    @apply inline-flex items-center border-b border-[var(--rule)] transition-colors duration-300;
+    transition-timing-function: var(--ease-tz);
+  }
+  .tz-link:hover {
+    @apply text-[var(--ember-deep)] border-[var(--ember-deep)];
+  }
+  .tz-link::after {
+    content: "→";
+    @apply ml-1 opacity-0 -translate-x-2 transition-all duration-300;
+  }
+  .tz-link:hover::after {
+    @apply opacity-100 translate-x-0;
+  }
+
+  .tz-rule {
+    @apply border-t border-[var(--rule)] w-full block;
+  }
+  .tz-rule-soft {
+    @apply border-t border-[var(--rule-soft)] w-full block;
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .tz-grain {
+    position: relative;
   }
-  
-  .glass-panel {
-    @apply bg-white/70 backdrop-blur-md border border-white/20;
-  }
-  
-  .glass-panel-dark {
-    @apply bg-sand-900/80 backdrop-blur-md border border-white/10;
+  .tz-grain::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 }

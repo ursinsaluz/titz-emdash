@@ -20,35 +20,34 @@ const featuredOffers = offers.filter(o => o.data.featured);
 
 <BaseLayout>
   {/* Hero Section */}
-  <section class="min-h-screen pt-32 pb-24 px-6 md:px-12 flex flex-col justify-end bg-sand-950 text-sand-50 relative overflow-hidden">
+  <section class="min-h-[90vh] pt-32 pb-24 px-6 md:px-12 flex flex-col justify-end bg-[var(--paper)] text-[var(--ink)] relative overflow-hidden">
     <div class="absolute inset-0 z-0">
       <img 
         src="https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&q=80&w=2000" 
         alt="Küche Atmosphäre" 
-        class="w-full h-full object-cover opacity-40 mix-blend-overlay"
+        class="w-full h-full object-cover opacity-20 mix-blend-overlay grayscale"
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-sand-950 via-sand-950/50 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[var(--paper)] via-[var(--paper)]/80 to-transparent"></div>
     </div>
     
     <div class="relative z-10 max-w-5xl">
       <div class="flex items-center gap-4 mb-8">
-        <span class="w-12 h-[1px] bg-terracotta"></span>
-        <span class="text-terracotta font-medium tracking-widest uppercase text-sm">Sebastian Titz</span>
+        <span class="w-12 h-[1px] bg-[var(--ember)]"></span>
+        <span class="tz-eyebrow text-[var(--ember)]">Sebastian Titz</span>
       </div>
-      <h1 class="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight mb-8 leading-[1.1] text-balance">
-        Authentisch.<br/>Regional.<br/><span class="text-sand-300 italic">Exzellent.</span>
+      <h1 class="tz-display text-5xl md:text-7xl lg:text-8xl mb-8 leading-[1.1] text-balance">
+        Authentisch.<br/>Regional.<br/><span class="italic text-[var(--ink-4)]">Exzellent.</span>
       </h1>
-      <p class="text-xl md:text-2xl text-sand-300 max-w-2xl text-balance font-light leading-relaxed mb-12">
+      <p class="text-xl md:text-2xl text-[var(--ink-2)] max-w-2xl text-balance font-light leading-relaxed mb-12">
         Kulinarik zwischen Michelin-Stern und Bündner Bodenständigkeit. 
         Schnörkellose Gerichte mit Wow-Effekt.
       </p>
       
       <div class="flex flex-wrap gap-6 items-center">
-        <a href="#restaurant" class="px-8 py-4 bg-white text-sand-950 font-medium rounded-full hover:bg-sand-100 transition-colors flex items-center gap-2">
+        <a href="#restaurant" class="tz-btn tz-btn-primary">
           Restaurant entdecken
-          <TzArrow className="w-5 h-5" />
         </a>
-        <a href="/stationen" class="px-8 py-4 bg-transparent text-white border border-white/30 rounded-full hover:bg-white/10 transition-colors">
+        <a href="/stationen" class="tz-btn tz-btn-ghost">
           Vita & Stationen
         </a>
       </div>
@@ -56,12 +55,12 @@ const featuredOffers = offers.filter(o => o.data.featured);
   </section>
 
   {/* Signature Dishes */}
-  <section class="py-24 md:py-32 px-6 md:px-12 bg-sand-50">
+  <section class="py-24 md:py-32 px-6 md:px-12 bg-[var(--paper-2)]">
     <div class="max-w-7xl mx-auto">
       <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
         <div class="max-w-2xl">
-          <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-6">Signature Dishes</h2>
-          <p class="text-lg text-sand-800 leading-relaxed text-balance">
+          <h2 class="tz-display text-3xl md:text-5xl mb-6">Signature Dishes</h2>
+          <p class="text-lg text-[var(--ink-2)] leading-relaxed text-balance">
             Klassiker, die bleiben. Gerichte, die meine Philosophie von Produktfokus und handwerklicher Tiefe auf den Punkt bringen.
           </p>
         </div>
@@ -70,7 +69,7 @@ const featuredOffers = offers.filter(o => o.data.featured);
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {dishes.map(dish => (
           <div class="group cursor-pointer">
-            <div class="aspect-[4/5] overflow-hidden rounded-sm mb-6 bg-sand-200">
+            <div class="aspect-[4/5] overflow-hidden rounded-md mb-6 bg-[var(--paper-3)]">
               {dish.data.image && (
                 <Image 
                   image={dish.data.image} 
@@ -79,11 +78,11 @@ const featuredOffers = offers.filter(o => o.data.featured);
                 />
               )}
             </div>
-            <div class="flex gap-2 text-xs font-medium uppercase tracking-wider text-terracotta mb-3">
-              <span>{dish.data.category}</span>
+            <div class="flex gap-2 mb-3">
+              <span class="tz-eyebrow text-[var(--ember)]">{dish.data.category}</span>
             </div>
-            <h3 class="text-xl font-medium mb-3">{dish.data.title}</h3>
-            <p class="text-sand-800 text-sm leading-relaxed">{dish.data.description}</p>
+            <h3 class="tz-display text-xl mb-3">{dish.data.title}</h3>
+            <p class="text-[var(--ink-3)] text-sm leading-relaxed">{dish.data.description}</p>
           </div>
         ))}
       </div>
@@ -91,32 +90,32 @@ const featuredOffers = offers.filter(o => o.data.featured);
   </section>
 
   {/* News */}
-  <section class="py-24 md:py-32 px-6 md:px-12 bg-white">
+  <section class="py-24 md:py-32 px-6 md:px-12 bg-[var(--paper)]">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-16 text-center">Aktuelles & Presse</h2>
+      <h2 class="tz-display text-3xl md:text-5xl mb-16 text-center">Aktuelles & Presse</h2>
       
-      <div class="flex flex-col divide-y divide-sand-200 border-y border-sand-200">
+      <div class="flex flex-col divide-y divide-[var(--rule-soft)] border-y border-[var(--rule-soft)]">
         {sortedNews.map(item => (
           <article class="py-8 group cursor-pointer">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-baseline">
-              <div class="md:col-span-3 text-sm text-sand-500 font-medium">
+              <div class="md:col-span-3 tz-eyebrow text-[var(--ink-4)]">
                 {item.data.date}
               </div>
               <div class="md:col-span-8">
                 <div class="flex items-center gap-3 mb-2">
-                  <span class="text-xs font-medium uppercase tracking-wider text-terracotta">{item.data.publication}</span>
+                  <span class="tz-eyebrow text-[var(--moss)]">{item.data.publication}</span>
                   {item.data.tag && (
                     <>
-                      <span class="w-1 h-1 rounded-full bg-sand-300"></span>
-                      <span class="text-xs font-medium uppercase tracking-wider text-sand-500">{item.data.tag}</span>
+                      <span class="w-1 h-1 rounded-full bg-[var(--ink-4)]"></span>
+                      <span class="tz-eyebrow text-[var(--ink-4)]">{item.data.tag}</span>
                     </>
                   )}
                 </div>
-                <h3 class="text-xl md:text-2xl font-medium mb-3 group-hover:text-terracotta transition-colors">{item.data.title}</h3>
-                <p class="text-sand-800 leading-relaxed">{item.data.body}</p>
+                <h3 class="tz-display text-xl md:text-2xl mb-3 group-hover:text-[var(--ember)] transition-colors">{item.data.title}</h3>
+                <p class="text-[var(--ink-2)] leading-relaxed">{item.data.body}</p>
               </div>
               <div class="hidden md:flex justify-end md:col-span-1 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
-                <TzArrow className="w-6 h-6 text-terracotta" />
+                <TzArrow className="w-6 h-6 text-[var(--ember)]" />
               </div>
             </div>
           </article>
@@ -126,23 +125,23 @@ const featuredOffers = offers.filter(o => o.data.featured);
   </section>
 
   {/* Offers */}
-  <section id="angebote" class="py-24 md:py-32 px-6 md:px-12 bg-sand-950 text-white">
+  <section id="angebote" class="py-24 md:py-32 px-6 md:px-12 bg-[var(--ink)] text-[var(--paper)]">
     <div class="max-w-7xl mx-auto">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
         <div>
-          <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-8">Angebote</h2>
-          <p class="text-xl text-sand-300 leading-relaxed mb-12 text-balance">
+          <h2 class="tz-display text-3xl md:text-5xl mb-8">Angebote</h2>
+          <p class="text-xl text-[var(--paper-3)] leading-relaxed mb-12 text-balance">
             Vom exklusiven Catering bis zur ganzheitlichen Konzeptberatung für die Gastronomie.
           </p>
           
           <div class="flex flex-col gap-12">
             {offers.filter(o => !o.data.featured).map(offer => (
-              <div class="border-t border-white/10 pt-8">
-                <h3 class="text-2xl font-medium mb-4">{offer.data.title}</h3>
-                <p class="text-sand-300 font-medium mb-3">{offer.data.lead}</p>
-                <p class="text-sand-400 mb-6 leading-relaxed">{offer.data.body}</p>
-                <a href="#kontakt" class="inline-flex items-center gap-2 text-terracotta hover:text-white transition-colors font-medium">
-                  {offer.data.cta_text || 'Anfragen'} <TzArrow className="w-4 h-4" />
+              <div class="border-t border-[var(--ink-3)] pt-8">
+                <h3 class="tz-display text-2xl mb-4">{offer.data.title}</h3>
+                <p class="text-[var(--paper-2)] font-medium mb-3">{offer.data.lead}</p>
+                <p class="text-[var(--paper-3)] mb-6 leading-relaxed">{offer.data.body}</p>
+                <a href="#kontakt" class="tz-link text-[var(--ember)]">
+                  {offer.data.cta_text || 'Anfragen'}
                 </a>
               </div>
             ))}
@@ -150,7 +149,7 @@ const featuredOffers = offers.filter(o => o.data.featured);
         </div>
         
         {featuredOffers.map(offer => (
-          <div class="relative group h-[600px] lg:h-auto rounded-sm overflow-hidden" id="restaurant">
+          <div class="relative group h-[600px] lg:h-auto rounded-md overflow-hidden" id="restaurant">
             {offer.data.image && (
               <Image 
                 image={offer.data.image} 
@@ -158,14 +157,14 @@ const featuredOffers = offers.filter(o => o.data.featured);
                 sizes="(min-width: 1024px) 50vw, 100vw"
               />
             )}
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-            <div class="absolute inset-x-0 bottom-0 p-8 md:p-12">
-              <span class="inline-block px-3 py-1 bg-terracotta text-white text-xs font-medium uppercase tracking-widest mb-4">
+            <div class="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-[var(--ink)]/40 to-transparent mix-blend-multiply"></div>
+            <div class="absolute inset-x-0 bottom-0 p-8 md:p-12 z-10">
+              <span class="inline-block px-3 py-1 bg-[var(--ember)] text-[var(--paper)] tz-eyebrow mb-4">
                 Featured
               </span>
-              <h3 class="text-3xl md:text-4xl font-medium mb-4">{offer.data.title}</h3>
-              <p class="text-sand-200 text-lg mb-8 max-w-md">{offer.data.body}</p>
-              <a href="#kontakt" class="px-8 py-4 bg-white text-sand-950 font-medium rounded-full hover:bg-sand-100 transition-colors inline-block">
+              <h3 class="tz-display text-3xl md:text-4xl text-[var(--paper)] mb-4">{offer.data.title}</h3>
+              <p class="text-[var(--paper-2)] text-lg mb-8 max-w-md">{offer.data.body}</p>
+              <a href="#kontakt" class="tz-btn tz-btn-primary bg-[var(--paper)] text-[var(--ink)] hover:bg-[var(--paper-2)]">
                 {offer.data.cta_text || 'Tisch reservieren'}
               </a>
             </div>
@@ -174,12 +173,13 @@ const featuredOffers = offers.filter(o => o.data.featured);
       </div>
     </div>
   </section>
+
   {/* Kontakt Formular */}
-  <section id="kontakt" class="py-24 md:py-32 px-6 md:px-12 bg-white">
+  <section id="kontakt" class="py-24 md:py-32 px-6 md:px-12 bg-[var(--paper-2)]">
     <div class="max-w-3xl mx-auto">
       <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-6">Kontakt & Anfragen</h2>
-        <p class="text-lg text-sand-800 leading-relaxed text-balance">
+        <h2 class="tz-display text-3xl md:text-5xl mb-6">Kontakt & Anfragen</h2>
+        <p class="text-lg text-[var(--ink-2)] leading-relaxed text-balance">
           Haben Sie Fragen zu unseren Angeboten oder möchten Sie einen Tisch reservieren? 
           Hinterlassen Sie Ihre Kontaktdaten, wir melden uns umgehend bei Ihnen zurück.
         </p>
@@ -188,33 +188,33 @@ const featuredOffers = offers.filter(o => o.data.featured);
       <form action="/api/contact" method="POST" class="space-y-8" id="contact-form">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <label for="name" class="block text-sm font-medium text-sand-950 mb-2">Name *</label>
+            <label for="name" class="block tz-eyebrow text-[var(--ink)] mb-2">Name *</label>
             <input type="text" id="name" name="name" required
-              class="w-full px-4 py-3 bg-sand-50 border border-sand-200 rounded-sm focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-colors"
+              class="w-full px-4 py-3 bg-[var(--paper)] border border-[var(--rule)] rounded-md focus:outline-none focus:border-[var(--ember)] focus:ring-1 focus:ring-[var(--ember)] transition-colors"
               placeholder="Max Mustermann"
             />
           </div>
           <div>
-            <label for="email" class="block text-sm font-medium text-sand-950 mb-2">E-Mail *</label>
+            <label for="email" class="block tz-eyebrow text-[var(--ink)] mb-2">E-Mail *</label>
             <input type="email" id="email" name="email" required
-              class="w-full px-4 py-3 bg-sand-50 border border-sand-200 rounded-sm focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-colors"
+              class="w-full px-4 py-3 bg-[var(--paper)] border border-[var(--rule)] rounded-md focus:outline-none focus:border-[var(--ember)] focus:ring-1 focus:ring-[var(--ember)] transition-colors"
               placeholder="max@beispiel.ch"
             />
           </div>
         </div>
 
         <div>
-          <label for="phone" class="block text-sm font-medium text-sand-950 mb-2">Telefonnummer für Rückrufe *</label>
+          <label for="phone" class="block tz-eyebrow text-[var(--ink)] mb-2">Telefonnummer für Rückrufe *</label>
           <input type="tel" id="phone" name="phone" required
-            class="w-full px-4 py-3 bg-sand-50 border border-sand-200 rounded-sm focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-colors"
+            class="w-full px-4 py-3 bg-[var(--paper)] border border-[var(--rule)] rounded-md focus:outline-none focus:border-[var(--ember)] focus:ring-1 focus:ring-[var(--ember)] transition-colors"
             placeholder="+41 79 123 45 67"
           />
         </div>
 
         <div>
-          <label for="message" class="block text-sm font-medium text-sand-950 mb-2">Nachricht (Optional)</label>
+          <label for="message" class="block tz-eyebrow text-[var(--ink)] mb-2">Nachricht (Optional)</label>
           <textarea id="message" name="message" rows="4"
-            class="w-full px-4 py-3 bg-sand-50 border border-sand-200 rounded-sm focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-colors"
+            class="w-full px-4 py-3 bg-[var(--paper)] border border-[var(--rule)] rounded-md focus:outline-none focus:border-[var(--ember)] focus:ring-1 focus:ring-[var(--ember)] transition-colors"
             placeholder="Wie können wir Ihnen helfen?"
           ></textarea>
         </div>
@@ -223,13 +223,11 @@ const featuredOffers = offers.filter(o => o.data.featured);
         <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}></div>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-        <div id="form-message" class="hidden p-4 rounded-sm"></div>
+        <div id="form-message" class="hidden p-4 rounded-md"></div>
 
-        <div>
-          <button type="submit"
-            class="w-full md:w-auto px-8 py-4 bg-terracotta text-white font-medium rounded-full hover:bg-terracotta/90 transition-colors inline-flex justify-center items-center gap-2">
+        <div class="flex justify-center md:justify-start">
+          <button type="submit" class="tz-btn tz-btn-ember w-full md:w-auto">
             Anfrage senden
-            <TzArrow className="w-5 h-5" />
           </button>
         </div>
       </form>
@@ -249,7 +247,7 @@ const featuredOffers = offers.filter(o => o.data.featured);
         submitBtn.disabled = true;
         submitBtn.innerHTML = 'Wird gesendet...';
         
-        formMessage.className = 'hidden p-4 rounded-sm mb-6';
+        formMessage.className = 'hidden p-4 rounded-md mb-6';
         
         try {
           const formData = new FormData(form);
@@ -262,7 +260,8 @@ const featuredOffers = offers.filter(o => o.data.featured);
           
           if (response.ok) {
             formMessage.textContent = 'Vielen Dank für Ihre Anfrage. Wir melden uns umgehend bei Ihnen zurück.';
-            formMessage.className = 'p-4 rounded-sm mb-6 bg-green-50 text-green-800 border border-green-200';
+            formMessage.className = 'p-4 rounded-md mb-6';
+            formMessage.style.cssText = 'background:var(--ember-soft);color:var(--ink);border:1px solid var(--ember)';
             form.reset();
             // Reset Turnstile if it exists globally
             if (window.turnstile) {
@@ -273,7 +272,8 @@ const featuredOffers = offers.filter(o => o.data.featured);
           }
         } catch (error) {
           formMessage.textContent = error instanceof Error ? error.message : 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.';
-          formMessage.className = 'p-4 rounded-sm mb-6 bg-red-50 text-red-800 border border-red-200';
+          formMessage.className = 'p-4 rounded-md mb-6';
+          formMessage.style.cssText = 'background:oklch(0.95 0.03 25);color:var(--ink);border:1px solid oklch(0.65 0.12 25)';
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalBtnText;
