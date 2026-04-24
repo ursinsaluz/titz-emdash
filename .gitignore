@@ -5,5 +5,6 @@ uploads
 data.db
 .env
 .env.*
+!.env.example
 claude_code_design/
 .wrangler
