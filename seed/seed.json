@@ -361,8 +361,8 @@
 	],
 	"menus": [
 		{
-			"name": "primary",
-			"label": "Primary Navigation",
+			"name": "main",
+			"label": "Hauptmenü",
 			"items": [
 				{
 					"type": "custom",
@@ -386,6 +386,7 @@
 				}
 			]
 		},
+
 		{
 			"name": "footer",
 			"label": "Footer Navigation",

@@ -7,7 +7,7 @@ import { Image } from 'emdash/ui';
 const { entries: themeSettings } = await getEmDashCollection("theme_settings");
 const config = themeSettings[0]?.data || {};
 
-const primaryMenu = await getMenu("primary");
+const primaryMenu = await getMenu("main");
 
 const siteName = config.site_name || "titz.cooking";
 const ctaText = config.header_cta_text || "Kontakt";
