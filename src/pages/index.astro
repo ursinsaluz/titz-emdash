@@ -5,16 +5,26 @@ import { getEntry } from 'astro:content';
 import { getEmDashCollection } from 'emdash';
 import { Image, PortableText } from 'emdash/ui';
 
+// Define interfaces for type safety
+interface EmDashEntry {
+  id: string;
+  data: any;
+  edit: any;
+  createdAt: string;
+}
+
 // Astro requires caching on pages that query EmDash
-Astro.cache.set({ maxAge: 60, staleWhileRevalidate: 300 });
+const { entries: dishes, cacheHint: dishesHint } = await getEmDashCollection("dishes");
+const { entries: news, cacheHint: newsHint } = await getEmDashCollection("news");
+const { entries: offers, cacheHint: offersHint } = await getEmDashCollection("offers");
 
-// Fetch data
-const { entries: dishes } = await getEmDashCollection("dishes");
-const { entries: news } = await getEmDashCollection("news");
-const { entries: offers } = await getEmDashCollection("offers");
+// Combine cache hints
+Astro.cache.set(dishesHint);
 
-// Sort or filter as needed
-const sortedNews = news.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+// Sort news by creation date
+const sortedNews = (news as EmDashEntry[]).sort((a, b) => 
+  new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+);
 const featuredOffers = offers.filter(o => o.data.featured);
 ---
 
@@ -182,6 +192,7 @@ const featuredOffers = offers.filter(o => o.data.featured);
               <div class="text-[var(--paper-3)] mb-12 leading-relaxed prose-sm opacity-80 max-w-lg" {...offer.edit.body}>
                 <PortableText value={offer.data.body} />
               </div>
+              <a href="#kontakt" class="tz-btn tz-btn-primary w-fit uppercase text-xs tracking-widest" {...offer.edit.cta_text}>
                 {offer.data.cta_text || 'Anfragen'}
               </a>
             </div>
@@ -292,8 +303,8 @@ const featuredOffers = offers.filter(o => o.data.featured);
             formMessage.style.cssText = 'background:var(--ember-soft);color:var(--ink);border:1px solid var(--ember)';
             form.reset();
             // Reset Turnstile if it exists globally
-            if (window.turnstile) {
-              window.turnstile.reset();
+            if ((window as any).turnstile) {
+              (window as any).turnstile.reset();
             }
           } else {
             throw new Error(result.error || 'Es ist ein Fehler aufgetreten.');

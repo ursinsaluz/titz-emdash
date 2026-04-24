@@ -48,29 +48,30 @@
   }
 }
 
+@utility tz-display {
+  @apply font-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 30, "WONK" 0;
+  line-height: 1.1;
+}
+
+.tz-display.italic,
+i.tz-display,
+em.tz-display {
+  font-style: italic;
+  font-variation-settings: "SOFT" 50, "WONK" 1;
+}
+
+@utility tz-eyebrow {
+  @apply font-mono uppercase text-[10px];
+  letter-spacing: 0.18em;
+}
+
+@utility tz-mono {
+  @apply font-mono text-[12px];
+}
+
 @layer components {
-  .tz-display {
-    @apply font-serif;
-    font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 30, "WONK" 0;
-    line-height: 1.1;
-  }
-  .tz-display.italic,
-  i.tz-display,
-  em.tz-display {
-    font-style: italic;
-    font-variation-settings: "SOFT" 50, "WONK" 1;
-  }
-
-  .tz-eyebrow {
-    @apply font-mono uppercase text-[10px]; /* Refined to tag size */
-    letter-spacing: 0.18em;
-  }
-
-  .tz-mono {
-    @apply font-mono text-[12px];
-  }
-
   .tz-btn {
     @apply inline-flex items-center justify-center px-8 py-4 rounded-sm font-sans font-medium transition-all duration-300;
     transition-timing-function: var(--ease-tz);
