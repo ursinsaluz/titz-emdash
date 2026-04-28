@@ -78,9 +78,9 @@
 			]
 		},
 		{
-			"slug": "news",
-			"label": "News & Press",
-			"labelSingular": "News Item",
+			"slug": "posts",
+			"label": "Posts",
+			"labelSingular": "Post",
 			"supports": [
 				"drafts",
 				"revisions",
@@ -101,18 +101,34 @@
 				},
 				{
 					"slug": "date",
-					"label": "Date (e.g. 02.01.2026)",
+					"label": "Date",
 					"type": "string"
 				},
 				{
-					"slug": "body",
-					"label": "Body",
+					"slug": "link",
+					"label": "External Link",
+					"type": "string"
+				},
+				{
+					"slug": "featured_image",
+					"label": "Featured Image",
+					"type": "image"
+				},
+				{
+					"slug": "content",
+					"label": "Content",
+					"type": "portableText",
+					"searchable": true
+				},
+				{
+					"slug": "excerpt",
+					"label": "Excerpt",
 					"type": "text",
 					"searchable": true
 				},
 				{
 					"slug": "tag",
-					"label": "Tag",
+					"label": "Tag (legacy)",
 					"type": "string"
 				}
 			]
@@ -359,6 +375,26 @@
 			]
 		}
 	],
+	"taxonomies": [
+		{
+			"name": "category",
+			"label": "Categories",
+			"labelSingular": "Category",
+			"hierarchical": true,
+			"collections": [
+				"posts"
+			]
+		},
+		{
+			"name": "tag",
+			"label": "Tags",
+			"labelSingular": "Tag",
+			"hierarchical": false,
+			"collections": [
+				"posts"
+			]
+		}
+	],
 	"menus": [
 		{
 			"name": "main",
@@ -490,7 +526,133 @@
 			}
 		],
 		"dishes": [],
-		"news": [],
+		"posts": [
+			{
+				"id": "news-1",
+				"slug": "restaurants-beizen-guide-2026",
+				"status": "published",
+				"data": {
+					"title": "Restaurants & Beizen Guide 2026",
+					"publication": "Falstaff",
+					"date": "02.01.2026",
+					"tag": "Auszeichnung",
+					"link": "https://www.falstaff.com/ch/news/falstaff-beizen-guide-2026-das-sind-die-besten-beizen-der-schweiz",
+					"excerpt": "Das Restaurant Pinot wurde von Falstaff Schweiz ausgezeichnet — für regionale Küche und die kreative Handschrift von Sebastian.",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Das Restaurant Pinot wurde von Falstaff Schweiz ausgezeichnet — für regionale Küche und die kreative Handschrift von Sebastian."
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "news-2",
+				"slug": "im-gespraech-mit-andy-piesche-felix-jarzina",
+				"status": "published",
+				"data": {
+					"title": "Im Gespräch mit Andy Piesche & Felix Jarzina",
+					"publication": "Podcast · Was kochst du?!",
+					"date": "21.10.2025",
+					"tag": "Interview",
+					"link": "https://open.spotify.com/show/5PZ8J8G9xX7z8Q8Z7Z8Z7Z",
+					"excerpt": "Drei Chefs über Küche, Handwerk und den Mut zum Weglassen.",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Drei Chefs über Küche, Handwerk und den Mut zum Weglassen."
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "news-3",
+				"slug": "mit-leidenschaft-kochen",
+				"status": "published",
+				"data": {
+					"title": "Mit Leidenschaft kochen",
+					"publication": "Porträt",
+					"date": "20.08.2025",
+					"tag": "Porträt",
+					"link": "",
+					"excerpt": "Ein Rückblick auf 20 Jahre Erfahrung in der Gourmetgastronomie und die Liebe zum Handwerk.",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Ein Rückblick auf 20 Jahre Erfahrung in der Gourmetgastronomie und die Liebe zum Handwerk."
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "news-4",
+				"slug": "bib-gourmand-fuer-das-restaurant-pinot",
+				"status": "published",
+				"data": {
+					"title": "Bib Gourmand für das Restaurant Pinot",
+					"publication": "Guide Michelin",
+					"date": "15.10.2024",
+					"tag": "Auszeichnung",
+					"link": "https://guide.michelin.com/ch/de/graubunden/flasch/restaurant/pinot",
+					"excerpt": "„Simply brilliant.\" — ausgezeichnet für exzellentes Preis-Leistungs-Verhältnis.",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "„Simply brilliant.\" — ausgezeichnet für exzellentes Preis-Leistungs-Verhältnis."
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "news-5",
+				"slug": "16-punkte-im-guide-2024",
+				"status": "published",
+				"data": {
+					"title": "16 Punkte im Guide 2024",
+					"publication": "GaultMillau",
+					"date": "01.10.2024",
+					"tag": "Auszeichnung",
+					"link": "https://www.gaultmillau.ch/restaurants/pinot-21156",
+					"excerpt": "Wir freuen uns über 16 Punkte im neuen Guide GaultMillau und die Bestätigung unserer Arbeit.",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Wir freuen uns über 16 Punkte im neuen Guide GaultMillau und die Bestätigung unserer Arbeit."
+								}
+							]
+						}
+					]
+				}
+			}
+		],
 		"offers": [],
 		"stations": [],
 		"education": [],

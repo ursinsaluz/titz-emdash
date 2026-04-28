@@ -3,7 +3,6 @@ export const prerender = false;
 
 import { getEmDashCollection } from "emdash";
 import Base from "../layouts/Base.astro";
-import PostCard from "../components/PostCard.astro";
 import { getReadingTime, extractText } from "../utils/reading-time";
 
 const query = Astro.url.searchParams.get("q")?.trim() || "";
@@ -26,10 +25,6 @@ function matchesQuery(post: (typeof allPosts)[0], q: string): boolean {
 const results = query ? allPosts.filter((p) => matchesQuery(p, query)) : [];
 ---
 
-<Base
-	title={query ? `Search: ${query}` : "Search"}
-	description="Search blog posts"
->
 <Base
 	title={query ? `Suche: ${query}` : "Suche"}
 	description="Suche auf titz.cooking"
@@ -70,19 +65,23 @@ const results = query ? allPosts.filter((p) => matchesQuery(p, query)) : [];
 				{
 					results.length > 0 && (
 						<div class="flex flex-col gap-12">
-							{results.map((post) => (
-								<a href={`/posts/${post.id}`} class="group border-b border-[var(--rule-soft)] pb-12 last:border-0 hover:border-[var(--ember)] transition-colors">
-									<article>
-										<div class="flex items-center gap-4 mb-4">
-											<span class="tz-mono text-[10px] text-[var(--ink-4)] uppercase tracking-widest">{post.data.publishedAt}</span>
-											<span class="w-1 h-1 rounded-full bg-[var(--ember)]"></span>
-											<span class="tz-mono text-[10px] text-[var(--moss)] uppercase tracking-widest">{getReadingTime(post.data.content)}</span>
-										</div>
-										<h3 class="tz-display text-3xl md:text-4xl group-hover:italic transition-all duration-300">{post.data.title}</h3>
-										<p class="text-[var(--ink-2)] mt-4 font-light leading-relaxed line-clamp-2 max-w-2xl">{post.data.excerpt}</p>
-									</article>
-								</a>
-							))}
+							{results.map((post) => {
+								const href = post.data.link || `/posts/${post.id}`;
+								const isExternal = !!post.data.link;
+								return (
+									<a href={href} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="group border-b border-[var(--rule-soft)] pb-12 last:border-0 hover:border-[var(--ember)] transition-colors">
+										<article>
+											<div class="flex items-center gap-4 mb-4">
+												<span class="tz-mono text-[10px] text-[var(--ink-4)] uppercase tracking-widest">{post.data.date || post.data.publishedAt}</span>
+												<span class="w-1 h-1 rounded-full bg-[var(--ember)]"></span>
+												<span class="tz-mono text-[10px] text-[var(--moss)] uppercase tracking-widest">{getReadingTime(post.data.content)}</span>
+											</div>
+											<h3 class="tz-display text-3xl md:text-4xl group-hover:italic transition-all duration-300">{post.data.title}</h3>
+											<p class="text-[var(--ink-2)] mt-4 font-light leading-relaxed line-clamp-2 max-w-2xl">{post.data.excerpt}</p>
+										</article>
+									</a>
+								);
+							})}
 						</div>
 					)
 				}

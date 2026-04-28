@@ -12,10 +12,8 @@ import {
 	PortableText,
 	Comments,
 	CommentForm,
-	WidgetArea,
 } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
-import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 
@@ -217,22 +215,26 @@ const publishDate =
 						</div>
 						<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 							{otherPostsWithTags.map(
-								({ post: p, tags: postTags, bylines: postBylines }) => (
-									<a href={`/posts/${p.id}`} class="group">
-										<div class="aspect-[4/5] overflow-hidden rounded-sm mb-8 bg-[var(--paper-3)]">
-											{p.data.featured_image && (
-												<Image 
-													image={p.data.featured_image} 
-													class="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
-												/>
-											)}
-										</div>
-										<div class="flex items-center gap-3 mb-4">
-											<span class="tz-mono text-[9px] text-[var(--ink-4)] uppercase tracking-widest">{p.data.publishedAt?.toLocaleDateString()}</span>
-										</div>
-										<h3 class="tz-display text-2xl group-hover:italic transition-all duration-300">{p.data.title}</h3>
-									</a>
-								)
+								({ post: p, tags: postTags, bylines: postBylines }) => {
+									const href = p.data.link || `/posts/${p.id}`;
+									const isExternal = !!p.data.link;
+									return (
+										<a href={href} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="group">
+											<div class="aspect-[4/5] overflow-hidden rounded-sm mb-8 bg-[var(--paper-3)]">
+												{p.data.featured_image && (
+													<Image 
+														image={p.data.featured_image} 
+														class="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
+													/>
+												)}
+											</div>
+											<div class="flex items-center gap-3 mb-4">
+												<span class="tz-mono text-[9px] text-[var(--ink-4)] uppercase tracking-widest">{p.data.date || p.data.publishedAt?.toLocaleDateString()}</span>
+											</div>
+											<h3 class="tz-display text-2xl group-hover:italic transition-all duration-300">{p.data.title}</h3>
+										</a>
+									);
+								}
 							)}
 						</div>
 					</div>

@@ -14,14 +14,14 @@ interface EmDashEntry {
 
 const { entry: homePage, cacheHint: homeHint } = await getEmDashEntry("pages", "home");
 const { entries: dishes, cacheHint: dishesHint } = await getEmDashCollection("dishes");
-const { entries: news, cacheHint: newsHint } = await getEmDashCollection("news");
+const { entries: posts, cacheHint: postsHint } = await getEmDashCollection("posts");
 const { entries: offers, cacheHint: offersHint } = await getEmDashCollection("offers");
 
 Astro.cache.set(homeHint);
 Astro.cache.set(dishesHint);
 
-// Sort news by creation date
-const sortedNews = (news as EmDashEntry[]).sort((a, b) => 
+// Sort posts by creation date or date field
+const sortedNews = (posts as EmDashEntry[]).sort((a, b) => 
   new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
 );
 const featuredOffers = offers.filter(o => o.data.featured);
@@ -137,8 +137,8 @@ const featuredOffers = offers.filter(o => o.data.featured);
       </div>
       
       <div class="flex flex-col divide-y divide-[var(--rule-soft)] border-y border-[var(--rule-soft)]">
-        {sortedNews.map(item => (
-          <article class="py-12 group cursor-pointer">
+        {sortedNews.map(item => {
+          const articleContent = (
             <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-12 items-start">
               <div class="md:col-span-3 tz-mono text-[var(--ink-4)] pt-2" {...item.edit.date}>
                 {item.data.date}
@@ -154,16 +154,26 @@ const featuredOffers = offers.filter(o => o.data.featured);
                   )}
                 </div>
                 <h3 class="tz-display text-3xl md:text-4xl mb-6 group-hover:text-[var(--ember)] transition-colors" {...item.edit.title}>{item.data.title}</h3>
-                <div class="text-[var(--ink-2)] leading-relaxed prose-sm max-w-2xl" {...item.edit.body}>
-                  <PortableText value={item.data.body} />
+                <div class="text-[var(--ink-2)] leading-relaxed prose-sm max-w-2xl" {...item.edit.excerpt}>
+                  {item.data.excerpt || <PortableText value={item.data.content} />}
                 </div>
               </div>
               <div class="hidden md:flex justify-end md:col-span-1 pt-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
                 <TzArrow className="w-8 h-8 text-[var(--ember)]" />
               </div>
             </div>
-          </article>
-        ))}
+          );
+
+          return item.data.link ? (
+            <a href={item.data.link} target="_blank" rel="noopener noreferrer" class="py-12 group cursor-pointer block">
+              {articleContent}
+            </a>
+          ) : (
+            <a href={`/posts/${item.id}`} class="py-12 group cursor-pointer block">
+              {articleContent}
+            </a>
+          );
+        })}
       </div>
     </div>
   </section>
