@@ -1,19 +1,17 @@
 ---
 import BaseLayout from '../layouts/Base.astro';
 import TzArrow from '../components/TzArrow.astro';
-import { getEmDashCollection } from 'emdash';
-import { Image } from 'emdash/ui';
+import { getEmDashCollection, getEmDashEntry } from 'emdash';
+import { Image, PortableText } from 'emdash/ui';
 
-// Cache page
-Astro.cache.set({ maxAge: 60, staleWhileRevalidate: 300 });
-
-// Fetch data
+const { entry: stationenPage, cacheHint: pageHint } = await getEmDashEntry("pages", "stationen");
 const { entries: stations } = await getEmDashCollection("stations");
 const { entries: education } = await getEmDashCollection("education");
 const { entries: qualifications } = await getEmDashCollection("qualifications");
 const { entries: hobbies } = await getEmDashCollection("hobbies");
 
-// Simple sort by year parsing (first 4 digits)
+Astro.cache.set(pageHint);
+
 const sortByYearDesc = (a, b) => {
   const yearA = parseInt(a.data.year?.match(/\d{4}/)?.[0] || "0");
   const yearB = parseInt(b.data.year?.match(/\d{4}/)?.[0] || "0");
@@ -31,12 +29,13 @@ const pastStations = sortedStations.filter(s => !s.data.current);
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center gap-6 mb-12">
         <span class="tz-section-number">§ 01</span>
-        <h1 class="tz-display text-5xl md:text-8xl">Stationen</h1>
+        <h1 class="tz-display text-5xl md:text-8xl" {...stationenPage?.edit.title}>
+          {stationenPage?.data.title ?? "Stationen"}
+        </h1>
       </div>
-      <p class="text-xl md:text-3xl text-[var(--ink-2)] text-balance font-light leading-relaxed max-w-3xl">
-        Der Weg durch renommierte Küchen. Geprägt von herausragenden Mentoren, 
-        anspruchsvollen Konzepten und der stetigen Suche nach dem eigenen Ausdruck.
-      </p>
+      <div class="text-xl md:text-3xl text-[var(--ink-2)] text-balance font-light leading-relaxed max-w-3xl" {...stationenPage?.edit.content}>
+        <PortableText value={stationenPage?.data.content ?? []} />
+      </div>
     </div>
   </section>
 
@@ -51,30 +50,30 @@ const pastStations = sortedStations.filter(s => !s.data.current);
                 <span class="tz-signature-dot bg-[var(--moss)]"></span>
                 <span class="tz-mono text-[var(--moss)] uppercase tracking-widest text-[10px]">Aktuell</span>
               </div>
-              <h2 class="tz-display text-4xl md:text-6xl mb-4">{currentStation.data.title}</h2>
-              <p class="tz-mono text-[var(--ink-4)] mb-12">{currentStation.data.place}</p>
+              <h2 class="tz-display text-4xl md:text-6xl mb-4" {...currentStation.edit.title}>{currentStation.data.title}</h2>
+              <p class="tz-mono text-[var(--ink-4)] mb-12" {...currentStation.edit.place}>{currentStation.data.place}</p>
             </div>
-            
+
             <div class="grid grid-cols-2 gap-12 border-y border-[var(--rule-soft)] py-12">
               <div>
                 <span class="tz-mono block text-[var(--ink-4)] text-[10px] mb-4">POSITION</span>
-                <span class="text-lg text-[var(--ink)] font-light italic tz-display">{currentStation.data.role}</span>
+                <span class="text-lg text-[var(--ink)] font-light italic tz-display" {...currentStation.edit.role}>{currentStation.data.role}</span>
               </div>
               {currentStation.data.awards && (
                 <div>
                   <span class="tz-mono block text-[var(--ink-4)] text-[10px] mb-4">AUSZEICHNUNGEN</span>
-                  <span class="text-[var(--ember)] font-light italic tz-display text-lg">{currentStation.data.awards}</span>
+                  <span class="text-[var(--ember)] font-light italic tz-display text-lg" {...currentStation.edit.awards}>{currentStation.data.awards}</span>
                 </div>
               )}
             </div>
-            
-            <p class="text-[var(--ink-2)] leading-relaxed text-lg font-light max-w-lg">{currentStation.data.body}</p>
+
+            <p class="text-[var(--ink-2)] leading-relaxed text-lg font-light max-w-lg" {...currentStation.edit.body}>{currentStation.data.body}</p>
           </div>
-          
-          <div class="lg:col-span-7 order-1 lg:order-2 aspect-[3/4] rounded-sm overflow-hidden bg-[var(--paper-3)]">
+
+          <div class="lg:col-span-7 order-1 lg:order-2 aspect-[3/4] rounded-sm overflow-hidden bg-[var(--paper-3)]" {...currentStation.edit.image}>
             {currentStation.data.image && (
-              <Image 
-                image={currentStation.data.image} 
+              <Image
+                image={currentStation.data.image}
                 class="w-full h-full object-cover"
                 sizes="(min-width: 1024px) 60vw, 100vw"
               />
@@ -92,31 +91,31 @@ const pastStations = sortedStations.filter(s => !s.data.current);
         <span class="tz-section-number">§ 02</span>
         <h2 class="tz-display text-4xl md:text-6xl">Werdegang</h2>
       </div>
-      
+
       <div class="space-y-32">
         {pastStations.map((station, i) => (
           <div class="group grid grid-cols-1 md:grid-cols-12 gap-12 items-start border-b border-[var(--rule-soft)] pb-24 last:border-0">
             <div class="md:col-span-3">
-              <span class="tz-display italic text-4xl text-[var(--ember)]">{station.data.year}</span>
+              <span class="tz-display italic text-4xl text-[var(--ember)]" {...station.edit.year}>{station.data.year}</span>
               <p class="tz-mono text-[var(--ink-4)] mt-4">STATION 0{pastStations.length - i}</p>
             </div>
             <div class="md:col-span-5">
-              <h3 class="tz-display text-3xl md:text-4xl mb-4 group-hover:italic transition-all duration-300">{station.data.title}</h3>
-              <p class="tz-mono text-[var(--ink-3)] mb-8 uppercase tracking-widest">{station.data.place}</p>
+              <h3 class="tz-display text-3xl md:text-4xl mb-4 group-hover:italic transition-all duration-300" {...station.edit.title}>{station.data.title}</h3>
+              <p class="tz-mono text-[var(--ink-3)] mb-8 uppercase tracking-widest" {...station.edit.place}>{station.data.place}</p>
               <div class="mb-8 p-6 bg-[var(--paper-2)] border-l-2 border-[var(--ember)]">
                 <span class="tz-mono text-[10px] block mb-2 text-[var(--ink-4)]">POSITION</span>
-                <span class="font-light italic tz-display text-xl">{station.data.role}</span>
+                <span class="font-light italic tz-display text-xl" {...station.edit.role}>{station.data.role}</span>
                 {station.data.awards && (
-                  <span class="text-[var(--ink-4)] block text-sm mt-4 border-t border-[var(--rule-soft)] pt-4 uppercase tracking-widest text-[10px]">{station.data.awards}</span>
+                  <span class="text-[var(--ink-4)] block text-sm mt-4 border-t border-[var(--rule-soft)] pt-4 uppercase tracking-widest text-[10px]" {...station.edit.awards}>{station.data.awards}</span>
                 )}
               </div>
-              <p class="text-[var(--ink-2)] leading-relaxed font-light">{station.data.body}</p>
+              <p class="text-[var(--ink-2)] leading-relaxed font-light" {...station.edit.body}>{station.data.body}</p>
             </div>
-            <div class="md:col-span-4">
+            <div class="md:col-span-4" {...station.edit.image}>
               {station.data.image && (
                 <div class="aspect-[4/5] overflow-hidden rounded-sm bg-[var(--paper-3)]">
-                  <Image 
-                    image={station.data.image} 
+                  <Image
+                    image={station.data.image}
                     class="w-full h-full object-cover grayscale mix-blend-multiply opacity-60 transition-all duration-1000 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
                     sizes="(min-width: 768px) 33vw, 100vw"
                   />
@@ -144,15 +143,15 @@ const pastStations = sortedStations.filter(s => !s.data.current);
           <div class="flex flex-col gap-12">
             {education.map(item => (
               <div class="group">
-                <span class="tz-display italic text-[var(--ember)] text-2xl mb-4 block">{item.data.year}</span>
-                <h4 class="tz-display text-2xl mb-2 group-hover:italic transition-all duration-300">{item.data.title}</h4>
-                <p class="tz-mono text-white/40 mb-4 text-[11px] tracking-widest">{item.data.place}</p>
-                <p class="text-sm text-white/60 leading-relaxed font-light">{item.data.note}</p>
+                <span class="tz-display italic text-[var(--ember)] text-2xl mb-4 block" {...item.edit.year}>{item.data.year}</span>
+                <h4 class="tz-display text-2xl mb-2 group-hover:italic transition-all duration-300" {...item.edit.title}>{item.data.title}</h4>
+                <p class="tz-mono text-white/40 mb-4 text-[11px] tracking-widest" {...item.edit.place}>{item.data.place}</p>
+                <p class="text-sm text-white/60 leading-relaxed font-light" {...item.edit.note}>{item.data.note}</p>
               </div>
             ))}
           </div>
         </div>
-        
+
         {/* Qualifications */}
         <div class="flex flex-col gap-16">
           <h3 class="tz-mono text-[var(--paper-3)] text-[10px] tracking-[0.2em] uppercase">Qualifikationen</h3>
@@ -160,15 +159,15 @@ const pastStations = sortedStations.filter(s => !s.data.current);
             {qualifications.map(item => (
               <div class="group border-b border-white/10 pb-12 last:border-0">
                 <div class="flex items-center gap-4 mb-6">
-                  <span class="tz-mono text-[10px] bg-white/10 px-3 py-1 rounded-sm text-white tracking-widest">
+                  <span class="tz-mono text-[10px] bg-white/10 px-3 py-1 rounded-sm text-white tracking-widest" {...item.edit.kind}>
                     {item.data.kind}
                   </span>
                   {item.data.year !== '—' && (
-                    <span class="tz-display italic text-[var(--ember)] text-xl">{item.data.year}</span>
+                    <span class="tz-display italic text-[var(--ember)] text-xl" {...item.edit.year}>{item.data.year}</span>
                   )}
                 </div>
-                <h4 class="tz-display text-2xl mb-4 group-hover:italic transition-all duration-300">{item.data.title}</h4>
-                <p class="text-white/60 leading-relaxed font-light text-sm">{item.data.note}</p>
+                <h4 class="tz-display text-2xl mb-4 group-hover:italic transition-all duration-300" {...item.edit.title}>{item.data.title}</h4>
+                <p class="text-white/60 leading-relaxed font-light text-sm" {...item.edit.note}>{item.data.note}</p>
               </div>
             ))}
           </div>
@@ -189,30 +188,28 @@ const pastStations = sortedStations.filter(s => !s.data.current);
           WAS DEN KOPF FREI MACHT. DIE NATUR ALS INSPIRATIONSQUELLE.
         </p>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {hobbies.map((hobby, i) => (
           <div class="group flex flex-col">
-             <div class="aspect-[3/4] overflow-hidden rounded-sm mb-8 bg-[var(--paper-3)]">
-                {hobby.data.image ? (
-                  <Image 
-                    image={hobby.data.image} 
-                    class="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
-                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-                  />
-                ) : (
-                   <div class="w-full h-full flex items-center justify-center p-8 text-center text-[var(--ink-4)] tz-mono text-[10px] tracking-widest italic border border-dashed border-[var(--ink-4)]">
-                    {hobby.data.placeholder || 'MOMENTAUFNAHME'}
-                  </div>
-                )}
-             </div>
-            <h3 class="tz-display text-2xl mb-4 group-hover:italic transition-all duration-300">{hobby.data.title}</h3>
-            <p class="text-[var(--ink-2)] text-sm leading-relaxed font-light">{hobby.data.note}</p>
+            <div class="aspect-[3/4] overflow-hidden rounded-sm mb-8 bg-[var(--paper-3)]" {...hobby.edit.image}>
+              {hobby.data.image ? (
+                <Image
+                  image={hobby.data.image}
+                  class="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
+                  sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
+                />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center p-8 text-center text-[var(--ink-4)] tz-mono text-[10px] tracking-widest italic border border-dashed border-[var(--ink-4)]">
+                  {hobby.data.placeholder || 'MOMENTAUFNAHME'}
+                </div>
+              )}
+            </div>
+            <h3 class="tz-display text-2xl mb-4 group-hover:italic transition-all duration-300" {...hobby.edit.title}>{hobby.data.title}</h3>
+            <p class="text-[var(--ink-2)] text-sm leading-relaxed font-light" {...hobby.edit.note}>{hobby.data.note}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
-</BaseLayout>
-
 </BaseLayout>
