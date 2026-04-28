@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '../layouts/Base.astro';
 import TzArrow from '../components/TzArrow.astro';
-import { getEntry } from 'astro:content';
-import { getEmDashCollection } from 'emdash';
+import { getEmDashCollection, getEmDashEntry } from 'emdash';
 import { Image, PortableText } from 'emdash/ui';
 
 // Define interfaces for type safety
@@ -13,12 +12,12 @@ interface EmDashEntry {
   createdAt: string;
 }
 
-// Astro requires caching on pages that query EmDash
+const { entry: homePage, cacheHint: homeHint } = await getEmDashEntry("pages", "home");
 const { entries: dishes, cacheHint: dishesHint } = await getEmDashCollection("dishes");
 const { entries: news, cacheHint: newsHint } = await getEmDashCollection("news");
 const { entries: offers, cacheHint: offersHint } = await getEmDashCollection("offers");
 
-// Combine cache hints
+Astro.cache.set(homeHint);
 Astro.cache.set(dishesHint);
 
 // Sort news by creation date
@@ -58,10 +57,9 @@ const featuredOffers = offers.filter(o => o.data.featured);
             46°59'N · 09°31'E<br/>
             FLÄSCH, GRAUBÜNDEN
           </p>
-          <p class="text-xl text-[var(--ink-2)] font-light leading-relaxed">
-            Kulinarik zwischen Michelin-Stern und Bündner Bodenständigkeit. 
-            Schnörkellose Gerichte mit Wow-Effekt.
-          </p>
+          <div class="text-xl text-[var(--ink-2)] font-light leading-relaxed" {...homePage?.edit.content}>
+            <PortableText value={homePage?.data.content ?? []} />
+          </div>
           <div class="flex flex-col gap-4">
             <a href="#restaurant" class="tz-btn tz-btn-primary w-fit uppercase text-xs tracking-widest">
               Restaurant entdecken
@@ -105,10 +103,10 @@ const featuredOffers = offers.filter(o => o.data.featured);
         {dishes.map((dish, i) => (
           <div class="group cursor-pointer flex flex-col">
             <a href={`/posts/${dish.id}`} class="group block relative">
-              <div class="aspect-[2/3] overflow-hidden rounded-sm bg-[var(--paper-3)] mb-8">
+              <div class="aspect-[2/3] overflow-hidden rounded-sm bg-[var(--paper-3)] mb-8" {...dish.edit.image}>
                 {dish.data.image && (
-                  <Image 
-                    image={dish.data.image} 
+                  <Image
+                    image={dish.data.image}
                     class="w-full h-full object-cover grayscale mix-blend-multiply opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
                     sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                   />

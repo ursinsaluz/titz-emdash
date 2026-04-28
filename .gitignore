@@ -10,3 +10,4 @@ claude_code_design/
 .wrangler
 titz.cooking.pdf
 .vscode
+.claude/settings.local.json

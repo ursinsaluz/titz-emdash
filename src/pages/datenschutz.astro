@@ -3,25 +3,25 @@ import BaseLayout from '../layouts/Base.astro';
 import { getEmDashEntry } from 'emdash';
 import { PortableText } from 'emdash/ui';
 
-const { entry: page, cacheHint } = await getEmDashEntry("pages", "impressum");
+const { entry: page, cacheHint } = await getEmDashEntry("pages", "datenschutz");
 Astro.cache.set(cacheHint);
 ---
 
-<BaseLayout title="Impressum — titz.cooking" description="Rechtliche Angaben, Verantwortliche und Haftungsausschluss für titz.cooking.">
+<BaseLayout title="Datenschutz — titz.cooking" description="Datenschutzerklärung für titz.cooking gemäss schweizerischem Datenschutzgesetz (DSG).">
   <section class="pt-48 pb-32 px-6 md:px-12 bg-[var(--paper)]">
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center gap-6 mb-24 border-b border-[var(--rule)] pb-12">
-        <span class="tz-section-number">§ 06</span>
+        <span class="tz-section-number">§ 07</span>
         <h1 class="tz-display text-5xl md:text-8xl" {...page?.edit.title}>
-          {page?.data.title ?? "Impressum"}
+          {page?.data.title ?? "Datenschutz"}
         </h1>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 text-[var(--ink-2)]">
-        <div class="lg:col-span-4 flex flex-col gap-12">
-          <div class="border-t border-[var(--rule)] pt-12">
-            <h2 class="tz-mono text-[var(--ink-4)] text-[10px] tracking-[0.2em] uppercase mb-8">Kontakt</h2>
-            <address class="not-italic flex flex-col gap-4 text-xl font-light leading-relaxed italic tz-display">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
+        <div class="lg:col-span-4">
+          <div class="border-t border-[var(--rule)] pt-12 sticky top-32">
+            <h2 class="tz-mono text-[var(--ink-4)] text-[10px] tracking-[0.2em] uppercase mb-8">Verantwortlich</h2>
+            <address class="not-italic flex flex-col gap-4 text-xl font-light leading-relaxed italic tz-display text-[var(--ink-2)]">
               <strong class="text-[var(--ink)] not-italic tz-mono text-sm tracking-widest uppercase mb-2">Sebastian Titz</strong>
               <span>c/o Restaurant Pinot</span>
               <span>Hauptstrasse 12</span>
@@ -36,7 +36,7 @@ Astro.cache.set(cacheHint);
 
         <div class="lg:col-span-8">
           <div
-            class="space-y-6 font-light leading-relaxed [&_h2]:tz-display [&_h2]:text-3xl [&_h2]:text-[var(--ink)] [&_h2]:italic [&_h2]:mb-6 [&_h2]:mt-12 [&_h2]:first:mt-0 [&_p]:max-w-2xl [&_strong]:font-medium [&_strong]:text-[var(--ink)]"
+            class="text-[var(--ink-2)] font-light leading-relaxed [&_h2]:tz-display [&_h2]:text-3xl [&_h2]:text-[var(--ink)] [&_h2]:italic [&_h2]:mb-6 [&_h2]:mt-12 [&_h2]:first:mt-0 [&_p]:max-w-2xl [&_p]:mb-6"
             {...page?.edit.content}
           >
             <PortableText value={page?.data.content ?? []} />
