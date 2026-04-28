@@ -451,7 +451,80 @@
 		}
 	],
 	"content": {
-		"pages": [],
+		"pages": [
+			{
+				"id": "page-home",
+				"slug": "home",
+				"status": "published",
+				"data": {
+					"title": "Startseite",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [{ "_type": "span", "text": "Kulinarik zwischen Michelin-Stern und Bündner Bodenständigkeit. Schnörkellose Gerichte mit Wow-Effekt." }]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-stationen",
+				"slug": "stationen",
+				"status": "published",
+				"data": {
+					"title": "Stationen",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [{ "_type": "span", "text": "Der Weg durch renommierte Küchen. Geprägt von herausragenden Mentoren, anspruchsvollen Konzepten und der stetigen Suche nach dem eigenen Ausdruck." }]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-impressum",
+				"slug": "impressum",
+				"status": "published",
+				"data": {
+					"title": "Impressum",
+					"content": [
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Haftungsausschluss" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Der Autor übernimmt keine Gewähr für die Richtigkeit, Genauigkeit, Aktualität, Zuverlässigkeit und Vollständigkeit der Informationen." }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Haftungsansprüche gegen den Autor wegen Schäden materieller oder immaterieller Art, die aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen, durch Missbrauch der Verbindung oder durch technische Störungen entstanden sind, werden ausgeschlossen." }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Alle Angebote sind unverbindlich. Der Autor behält es sich ausdrücklich vor, Teile der Seiten oder das gesamte Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung zeitweise oder endgültig einzustellen." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Links" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Verweise und Links auf Webseiten Dritter liegen ausserhalb unseres Verantwortungsbereichs. Es wird jegliche Verantwortung für solche Webseiten abgelehnt. Der Zugriff und die Nutzung solcher Webseiten erfolgen auf eigene Gefahr des jeweiligen Nutzers." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Urheberrechte" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf dieser Website, gehören ausschliesslich Sebastian Titz oder den speziell genannten Rechteinhabern. Für die Reproduktion jeglicher Elemente ist die schriftliche Zustimmung der Urheberrechtsträger im Voraus einzuholen." }] }
+					]
+				}
+			},
+			{
+				"id": "page-datenschutz",
+				"slug": "datenschutz",
+				"status": "published",
+				"data": {
+					"title": "Datenschutz",
+					"content": [
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Datenschutzerklärung" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Gestützt auf Art. 13 der schweizerischen Bundesverfassung und die datenschutzrechtlichen Bestimmungen des Bundes (Datenschutzgesetz, DSG) hat jede Person Anspruch auf Schutz ihrer Privatsphäre sowie auf Schutz vor Missbrauch ihrer persönlichen Daten. Wir halten diese Bestimmungen ein. Persönliche Daten werden streng vertraulich behandelt und weder an Dritte verkauft noch weitergegeben." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Verantwortliche Stelle" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Verantwortlich für die Datenbearbeitung auf dieser Website ist Sebastian Titz, c/o Restaurant Pinot, Hauptstrasse 12, 7306 Fläsch. Bei Datenschutzfragen wenden Sie sich bitte an info@titz.cooking." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Erhebung und Bearbeitung von Personendaten" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Wenn Sie uns über das Kontaktformular oder per E-Mail kontaktieren, werden die von Ihnen gemachten Angaben (Name, E-Mail-Adresse, Telefonnummer und Ihre Nachricht) von uns gespeichert, um Ihre Anfrage zu bearbeiten und bei Anschlussfragen darauf zurückgreifen zu können. Diese Daten werden nach vollständiger Bearbeitung Ihrer Anfrage gelöscht, sofern keine gesetzliche Aufbewahrungspflicht besteht." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Cookies und Logdateien" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Diese Website verwendet keine Tracking-Cookies. Es werden lediglich technisch notwendige Cookies eingesetzt, um die Grundfunktionen der Website sicherzustellen. Unser Webserver speichert automatisch Logdateien mit Datum, Uhrzeit, IP-Adresse, Browser-Typ und besuchter Seite. Diese Daten werden ausschliesslich für technische und statistische Auswertungen verwendet und nicht mit personenbezogenen Daten verknüpft." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Weitergabe von Daten" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Wir geben Ihre personenbezogenen Daten nicht ohne Ihre ausdrückliche Einwilligung an Dritte weiter. Ausnahmen gelten nur, wenn wir gesetzlich dazu verpflichtet sind oder wenn die Weitergabe zur Vertragserfüllung notwendig ist." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Ihre Rechte" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Sie haben jederzeit das Recht auf Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft, Empfänger und den Zweck der Datenverarbeitung sowie das Recht auf Berichtigung, Sperrung oder Löschung dieser Daten. Für Anfragen wenden Sie sich bitte an info@titz.cooking." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Änderungen dieser Datenschutzerklärung" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Wir behalten uns vor, diese Datenschutzerklärung jederzeit mit Wirkung für die Zukunft zu ändern. Die jeweils aktuelle Version ist auf unserer Website verfügbar. Stand: April 2026." }] }
+					]
+				}
+			}
+		],
 		"dishes": [],
 		"posts": [
 			{
