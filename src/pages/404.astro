@@ -1,0 +1,36 @@
+---
+import { getEmDashEntry } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../layouts/Base.astro";
+
+// Fetch the 404 page content from CMS
+const { entry: page } = await getEmDashEntry("pages", "404");
+
+const title = page?.data.title || "404 — Seite nicht gefunden";
+---
+
+<Base
+	title={title}
+	navMode="dark"
+>
+	<article class="pt-48 pb-32 px-6 md:px-14 bg-[var(--paper)] min-h-screen flex items-center justify-center text-center">
+		<div class="max-w-2xl mx-auto">
+			<div class="tz-eyebrow text-[var(--ember)] mb-6 uppercase tracking-widest">Error 404</div>
+			<h1 class="tz-display text-6xl md:text-[120px] font-light leading-none mb-12" {...page?.edit.title}>
+				{title}
+			</h1>
+
+			{page?.data.content && (
+				<div class="prose-sm font-light leading-relaxed text-xl text-[var(--ink-2)] mb-16" {...page?.edit.content}>
+					<PortableText value={page.data.content} />
+				</div>
+			)}
+
+			<div class="flex justify-center gap-6">
+				<a href="/" class="tz-btn bg-[var(--ink)] text-[var(--paper)] hover:bg-[var(--ember)] transition-colors">
+					Zur Startseite
+				</a>
+			</div>
+		</div>
+	</article>
+</Base>
