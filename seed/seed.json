@@ -525,7 +525,52 @@
 				}
 			}
 		],
-		"dishes": [],
+		"dishes": [
+			{
+				"id": "dish-1",
+				"slug": "milcheis-spekulatius",
+				"status": "published",
+				"data": {
+					"title": "Milcheis mit Spekulatius",
+					"category": "Signature",
+					"description": "Winterliche Aromen treffen auf Finesse. Geflämmte Meringue, Apfel, Spekulatius.",
+					"tags": "Dessert · Winter"
+				}
+			},
+			{
+				"id": "dish-2",
+				"slug": "heusuppe",
+				"status": "published",
+				"data": {
+					"title": "Heusuppe",
+					"category": "Signature",
+					"description": "Hommage an Stefan Wiesner. Getrocknetes Heu in einer samtigen Suppe. Natur pur.",
+					"tags": "Suppe · Ganzjährig"
+				}
+			},
+			{
+				"id": "dish-3",
+				"slug": "angus-beef-tartare",
+				"status": "published",
+				"data": {
+					"title": "Angus Beef Tartare",
+					"category": "Starter",
+					"description": "Hommage an die Erde. Das Rohe des Rindes trifft auf die Textur des Selleries.",
+					"tags": "Vorspeise"
+				}
+			},
+			{
+				"id": "dish-4",
+				"slug": "kalb-schwarzer-trueffel",
+				"status": "published",
+				"data": {
+					"title": "Kalb mit schwarzem Trüffel",
+					"category": "Signature",
+					"description": "Heimat trifft Luxus. Zartes Kalb, Tiefe des Trüffels, Serviettenknödel.",
+					"tags": "Hauptgang · Winter"
+				}
+			}
+		],
 		"posts": [
 			{
 				"id": "news-1",
@@ -653,7 +698,42 @@
 				}
 			}
 		],
-		"offers": [],
+		"offers": [
+			{
+				"id": "offer-1",
+				"slug": "beratung",
+				"status": "published",
+				"data": {
+					"title": "Beratung",
+					"lead": "Kulinarische Konzepte für Health- & Lifestyle-Resorts.",
+					"body": "Zwanzig Jahre Gourmetgastronomie, übersetzt in tragfähige Konzepte — vom Menü-Engineering bis zur Teamführung.",
+					"cta_text": "Beratung anfragen"
+				}
+			},
+			{
+				"id": "offer-2",
+				"slug": "catering",
+				"status": "published",
+				"data": {
+					"title": "Catering",
+					"lead": "Nachhaltige Sternenküche für Ihren Event.",
+					"body": "Wir bringen exzellenten Genuss zu Ihnen — vom privaten Dinner bis zum Firmen-Anlass, stets mit regionalem Fokus.",
+					"cta_text": "Weitere Informationen"
+				}
+			},
+			{
+				"id": "offer-3",
+				"slug": "restaurant-pinot",
+				"status": "published",
+				"data": {
+					"title": "Restaurant Pinot",
+					"lead": "Rückkehr zur Intimität.",
+					"body": "Schnörkellose Gerichte mit Wow-Effekt in der Bündner Herrschaft. Täglich 09:00 – 18:00, Do abends.",
+					"cta_text": "Kontakt aufnehmen",
+					"featured": true
+				}
+			}
+		],
 		"stations": [],
 		"education": [],
 		"qualifications": [],

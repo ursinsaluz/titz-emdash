@@ -24,16 +24,16 @@ const pastStations = sortedStations.filter(s => !s.data.current);
 ---
 
 <BaseLayout title="Stationen — titz.cooking">
-  {/* Hero */}
-  <section class="pt-40 pb-24 px-6 md:px-12 bg-[var(--paper)]">
+  {/* Hero Section */}
+  <section class="relative pt-32 pb-20 px-6 md:px-14 bg-[var(--paper)]">
     <div class="max-w-7xl mx-auto">
-      <div class="flex items-center gap-6 mb-12">
-        <span class="tz-section-number">§ 01</span>
-        <h1 class="tz-display text-5xl md:text-8xl" {...stationenPage?.edit.title}>
+      <div class="mb-12">
+        <div class="tz-eyebrow mb-4">§ 01 — Vita</div>
+        <h1 class="tz-display text-[64px] md:text-[100px] lg:text-[120px] font-light leading-none -ml-1 lg:-ml-2" {...stationenPage?.edit.title}>
           {stationenPage?.data.title ?? "Stationen"}
         </h1>
       </div>
-      <div class="text-xl md:text-3xl text-[var(--ink-2)] text-balance font-light leading-relaxed max-w-3xl" {...stationenPage?.edit.content}>
+      <div class="font-serif text-xl md:text-3xl text-[var(--ink-2)] italic font-light leading-relaxed max-w-4xl" {...stationenPage?.edit.content}>
         <PortableText value={stationenPage?.data.content ?? []} />
       </div>
     </div>

@@ -5,15 +5,15 @@
   --color-kuemmel: #ebe4d8;
   --color-muskat: #e2d9c8;
   --color-asche: #8c8578;
-  --color-pfeffer: #1c1c1c; /* Refined to design spec */
+  --color-pfeffer: #1a1a18; /* Matched to target */
   --color-piment: #2d2a25;
   --color-kardamom: #5a544a;
   --color-paprika: oklch(0.62 0.14 45);
   --color-safran: oklch(0.48 0.13 40);
   --color-chili-soft: oklch(0.92 0.04 55);
-  --color-thymian: #3d4d3d; /* Refined to design spec */
-  --color-rule: rgba(28, 28, 28, 0.14); /* Refined to design spec */
-  --color-rule-soft: rgba(28, 28, 28, 0.08);
+  --color-thymian: oklch(0.38 0.04 140); /* Matched to target */
+  --color-rule: rgba(26, 26, 24, 0.14); /* Matched to target */
+  --color-rule-soft: rgba(26, 26, 24, 0.08); /* Matched to target */
 
   --font-serif: "Fraunces", Georgia, serif;
   --font-sans: "Inter Tight", -apple-system, sans-serif;

@@ -24,243 +24,343 @@ Astro.cache.set(dishesHint);
 const sortedNews = (posts as EmDashEntry[]).sort((a, b) => 
   new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
 );
-const featuredOffers = offers.filter(o => o.data.featured);
 ---
 
 <BaseLayout>
-  {/* Hero Section */}
-  <section class="min-h-screen pt-32 pb-24 px-6 md:px-12 flex flex-col justify-center bg-[var(--paper)] text-[var(--ink)] relative overflow-hidden">
+  {/* Stage / Hero Section */}
+  <section class="relative h-[860px] overflow-hidden bg-[#1a1a18]" id="home">
     <div class="absolute inset-0 z-0">
       <img 
-        src="https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&q=80&w=2000" 
-        alt="Küche Atmosphäre" 
-        class="w-full h-full object-cover opacity-10 mix-blend-multiply grayscale"
+        src="/claude_code_design/img/pinot-11.jpg" 
+        alt="Sebastian Titz im Restaurant Pinot" 
+        class="w-full h-full object-cover opacity-[0.78]"
       />
+      <div class="absolute inset-0 bg-gradient-to-b from-[#1a1a18]/55 via-[#1a1a18]/15 to-[#1a1a18]/75"></div>
     </div>
     
-    <div class="relative z-10 max-w-7xl mx-auto w-full">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mb-16">
-        <div class="flex flex-col gap-6">
-          <div class="flex items-center gap-4">
-            <span class="tz-section-number">§ 01</span>
-            <span class="tz-mono text-[var(--ink-4)]">EST. MMXXIV</span>
+    {/* Hero Text */}
+    <div class="absolute left-6 md:left-14 right-6 md:right-14 bottom-20 z-10 text-[var(--paper)]">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] items-end gap-12 lg:gap-12">
+        <div>
+          <div class="tz-eyebrow text-[var(--paper)]/70 mb-6 flex items-center gap-2">
+            <span class="text-[var(--ember)]">●</span>
+            KÜCHENCHEF · RESTAURANT PINOT · FLÄSCH
           </div>
-          <h1 class="tz-display text-7xl md:text-[144px] lg:text-[180px] -ml-1 md:-ml-4 leading-[0.85] tracking-tight text-balance">
+          <h1 class="tz-display text-[80px] md:text-[120px] lg:text-[168px] leading-[0.88] font-light -ml-1 lg:-ml-2">
             Authentisch.<br/>
-            <span class="italic text-[var(--ember)]">Regional.</span><br/>
-            Exzellent.
+            <span class="italic font-normal">Regional.</span><br/>
+            <span class="text-[var(--ember)]">Exzellent.</span>
           </h1>
         </div>
         
-        <div class="max-w-xs flex flex-col gap-8">
-          <p class="tz-mono text-[var(--ink-3)] leading-relaxed">
-            46°59'N · 09°31'E<br/>
-            FLÄSCH, GRAUBÜNDEN
+        <div class="lg:text-right lg:pb-5">
+          <p class="font-serif text-lg md:text-xl italic font-light leading-relaxed max-w-[340px] ml-auto opacity-90 mb-8 lg:mb-7">
+            Kulinarik zwischen Michelin-Stern und Bündner Bodenständigkeit.
           </p>
-          <div class="text-xl text-[var(--ink-2)] font-light leading-relaxed" {...homePage?.edit.content}>
-            <PortableText value={homePage?.data.content ?? []} />
-          </div>
-          <div class="flex flex-col gap-4">
-            <a href="#restaurant" class="tz-btn tz-btn-primary w-fit uppercase text-xs tracking-widest">
-              Restaurant entdecken
+          <div class="flex flex-wrap gap-3 lg:justify-end">
+            <a href="#philo" class="tz-btn bg-[var(--ember)] text-[var(--paper)] group">
+              Meine Philosophie
+              <TzArrow className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
-            <a href="/stationen" class="tz-link w-fit py-2 text-sm uppercase tracking-widest">
-              Vita & Stationen
+            <a href="#kontakt" class="tz-btn bg-transparent border border-[var(--paper)] text-[var(--paper)] hover:bg-[var(--paper)] hover:text-[var(--ink)]">
+              Kontakt aufnehmen
             </a>
           </div>
         </div>
       </div>
     </div>
-    
-    <div class="absolute bottom-12 left-6 md:left-12 tz-mono text-[var(--ink-4)] text-[10px] tracking-[0.3em] uppercase">
-      Scroll to explore
+
+    {/* Corner Marks */}
+    <div class="absolute top-32 left-6 md:left-14 z-10 font-mono text-[10px] tracking-[0.2em] text-[var(--paper)]/55 uppercase">
+      46°59′N · 09°31′E
+    </div>
+    <div class="absolute top-32 right-6 md:right-14 z-10 font-mono text-[10px] tracking-[0.2em] text-[var(--paper)]/55 text-right uppercase">
+      EST. MMXXIV<br/>Nº 001
     </div>
   </section>
 
-  {/* Quote Section */}
-  <section class="py-32 px-6 md:px-12 border-y border-[var(--rule-soft)]">
-    <div class="max-w-5xl mx-auto text-center">
-      <h2 class="tz-display text-4xl md:text-6xl italic text-[var(--ink-2)] leading-tight">
-        "Das Produkt ist der Star. <br class="hidden md:block"/> Alles andere ist nur Handwerk."
-      </h2>
-    </div>
-  </section>
-
-  {/* Signature Dishes */}
-  <section class="py-32 px-6 md:px-12 bg-[var(--paper)]">
+  {/* § 01 — Philosophie */}
+  <section id="philo" class="py-32 md:py-40 px-6 md:px-14 bg-[var(--paper)]">
     <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row justify-between items-baseline gap-8 mb-24 border-b border-[var(--rule)] pb-12">
-        <div class="flex items-center gap-6">
-          <span class="tz-section-number">§ 02</span>
-          <h2 class="tz-display text-5xl md:text-7xl">Signature Dishes</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-12 lg:gap-20 mb-20">
+        <div>
+          <div class="tz-eyebrow mb-4">§ 01 — Philosophie</div>
+          <div class="font-mono text-[11px] text-[var(--ink-3)] line-height-[1.7] uppercase tracking-wide">
+            Drei Worte, die alles sagen.<br/>
+            Drei Prinzipien, die bleiben.
+          </div>
         </div>
-        <p class="tz-mono text-[var(--ink-3)] max-w-sm">
-          KLASSIKER, DIE BLEIBEN. PRODUKTFOKUS UND HANDWERKLICHE TIEFE.
-        </p>
+        <h2 class="tz-display text-4xl md:text-7xl lg:text-[96px] font-light leading-tight max-w-[900px]">
+          Kochen ist für mich ein <span class="italic">tiefer Respekt</span> vor dem Ursprung unserer Nahrung.
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-[var(--rule)] pt-12">
+        <div>
+          <div class="font-mono text-[10px] tracking-[0.2em] text-[var(--ember)] mb-6 uppercase">§ 01</div>
+          <div class="aspect-[4/5] md:h-[300px] bg-[var(--paper-2)] mb-7 overflow-hidden">
+            <img src="/claude_code_design/img/pinot-07.jpg" alt="Zutaten Vorbereitung" class="w-full h-full object-cover filter saturate-[0.95]" />
+          </div>
+          <h3 class="tz-display text-4xl mb-3 font-normal">Authentisch</h3>
+          <p class="font-serif text-[17px] italic text-[var(--ink-2)] mb-4 leading-snug">Ehrlich und ohne Schnickschnack.</p>
+          <p class="text-sm leading-relaxed text-[var(--ink-3)]">Ich koche so, wie ich bin: bodenständig und direkt. Schnörkellose Gerichte, ohne Chichi, aber mit einem echten Wow-Effekt im Mund.</p>
+        </div>
+        <div>
+          <div class="font-mono text-[10px] tracking-[0.2em] text-[var(--ember)] mb-6 uppercase">§ 02</div>
+          <div class="aspect-[4/5] md:h-[300px] bg-[var(--paper-2)] mb-7 overflow-hidden">
+            <img src="/claude_code_design/img/terroir-1.jpg" alt="Terroir Graubünden" class="w-full h-full object-cover filter saturate-[0.95]" />
+          </div>
+          <h3 class="tz-display text-4xl mb-3 font-normal">Regional</h3>
+          <p class="font-serif text-[17px] italic text-[var(--ink-2)] mb-4 leading-snug">Aus der Heimat auf den Teller.</p>
+          <p class="text-sm leading-relaxed text-[var(--ink-3)]">Die besten Lebensmittel finde ich direkt hier. Enge Zusammenarbeit mit lokalen Produzenten — gekocht wird frisch und im Rhythmus der vier Jahreszeiten.</p>
+        </div>
+        <div>
+          <div class="font-mono text-[10px] tracking-[0.2em] text-[var(--ember)] mb-6 uppercase">§ 03</div>
+          <div class="aspect-[4/5] md:h-[300px] bg-[var(--paper-2)] mb-7 overflow-hidden">
+            <img src="/claude_code_design/img/dish-2.jpg" alt="Anrichten" class="w-full h-full object-cover filter saturate-[0.95]" />
+          </div>
+          <h3 class="tz-display text-4xl mb-3 font-normal">Exzellent</h3>
+          <p class="font-serif text-[17px] italic text-[var(--ink-2)] mb-4 leading-snug">Die Natur als Massstab.</p>
+          <p class="text-sm leading-relaxed text-[var(--ink-3)]">Der Goldene Schnitt. Die Fibonacci-Reihe. Natürliche Ordnung inspiriert mich beim Anrichten — bis daraus mit einem guten Glas Wein ein Erlebnis wird.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* § 02 — Der Koch */}
+  <section id="koch" class="py-32 md:py-40 px-6 md:px-14 bg-[var(--ink)] text-[var(--paper)]">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+        <div class="relative h-[400px] md:h-[620px] overflow-hidden">
+          <img src="/claude_code_design/img/pinot-15.jpg" alt="Sebastian Titz" class="w-full h-full object-cover" />
+          <div class="absolute bottom-4 left-4 font-mono text-[9px] tracking-[0.2em] text-[var(--paper)] opacity-70 uppercase">
+            FIG. 01 — In der Küche, Restaurant Pinot, Fläsch
+          </div>
+        </div>
+        <div>
+          <div class="tz-eyebrow text-[var(--ember)] mb-6">§ 02 — Der Koch</div>
+          <h2 class="tz-display text-5xl md:text-7xl font-light leading-none">
+            Sebastian <span class="italic text-[var(--ember)]">Titz</span>
+          </h2>
+          <p class="font-serif italic text-xl md:text-[22px] leading-relaxed mt-7 mb-8 max-w-[520px] opacity-90">
+            Zwanzig Jahre Gourmetküche. Ein Michelin-Stern. 16 GaultMillau-Punkte. Und immer noch das Lagerfeuer aus dem Pfadilager im Kopf.
+          </p>
+          <p class="text-sm md:text-base leading-relaxed max-w-[480px] opacity-75 mb-12">
+            Aufgewachsen in Graubünden, geformt in den grössten Küchen der Schweiz, zurückgekehrt in die Bündner Herrschaft. Im Restaurant Pinot kocht Sebastian Titz eine Küche, die das Terroir kennt — und den Gast respektiert.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="/stationen" class="tz-btn bg-[var(--ember)] text-[var(--paper)] group">
+              Stationen ansehen
+              <TzArrow className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a href="#philo" class="tz-btn bg-transparent border border-[var(--paper)] text-[var(--paper)] hover:bg-[var(--paper)] hover:text-[var(--ink)]">
+              Philosophie lesen
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* § 03 — Signature Dishes */}
+  <section id="dishes" class="py-32 px-6 md:px-14 bg-[var(--paper)]">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+        <div>
+          <div class="tz-eyebrow mb-4">§ 03 — Signature Dishes</div>
+          <h2 class="tz-display text-5xl md:text-[88px] font-light leading-none">
+            Die <span class="italic">Sprache</span> des Tellers.
+          </h2>
+        </div>
+        <div class="flex gap-3">
+          <button class="w-12 h-12 flex items-center justify-center rounded-sm border border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] transition-all">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="w-12 h-12 flex items-center justify-center rounded-sm bg-[var(--ink)] text-[var(--paper)] hover:bg-[var(--ember)] transition-all">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
       </div>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-24">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {dishes.map((dish, i) => (
-          <div class="group cursor-pointer flex flex-col">
-            <a href={`/posts/${dish.id}`} class="group block relative">
-              <div class="aspect-[2/3] overflow-hidden rounded-sm bg-[var(--paper-3)] mb-8" {...dish.edit.image}>
-                {dish.data.image && (
-                  <Image
-                    image={dish.data.image}
-                    class="w-full h-full object-cover grayscale mix-blend-multiply opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
-                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-                  />
-                )}
-                {/* Number Overlay */}
-                <div class="absolute top-6 left-6 tz-mono text-[10px] text-[var(--paper)] mix-blend-difference opacity-40">
-                  {String(i + 1).padStart(2, '0')}
-                </div>
-              </div>
-              <div class="flex items-center justify-between gap-4 border-b border-[var(--rule-soft)] pb-4">
-                <h3 class="tz-display text-2xl group-hover:italic transition-all duration-300" {...dish.edit.title}>{dish.data.title}</h3>
-                <TzArrow className="w-5 h-5 text-[var(--ink-4)] group-hover:text-[var(--ember)] group-hover:translate-x-1 transition-all duration-300" />
-              </div>
-            </a>
-          </div>
+          <article class="border-t border-[var(--ink)] pt-4 flex flex-col">
+            <div class="flex justify-between items-center mb-4 tz-mono text-[10px] tracking-[0.15em] uppercase text-[var(--ink-3)]">
+              <span class={dish.data.category?.toLowerCase() === 'signature' ? 'text-[var(--ember)]' : ''}>
+                ● {dish.data.category || 'Signature'}
+              </span>
+              <span>№ {String(i + 1).padStart(2, '0')}</span>
+            </div>
+            
+            <div class="aspect-[4/5] overflow-hidden bg-[var(--paper-2)] mb-5 group">
+              {dish.data.image ? (
+                <Image
+                  image={dish.data.image}
+                  class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center text-[var(--ink-4)] italic">No image</div>
+              )}
+            </div>
+            
+            <h3 class="tz-display text-2xl mb-2 font-medium leading-tight" {...dish.edit.title}>{dish.data.title}</h3>
+            <p class="text-sm text-[var(--ink-3)] leading-relaxed mb-4 flex-grow" {...dish.edit.description}>
+              {dish.data.description}
+            </p>
+            <div class="tz-mono text-[10px] tracking-widest text-[var(--ink-4)] uppercase" {...dish.edit.tags}>
+              {dish.data.tags}
+            </div>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-
-  {/* News */}
-  <section class="py-32 px-6 md:px-12 bg-[var(--paper)]">
+  {/* § 04 — Aktuelles */}
+  <section id="aktuelles" class="py-32 px-6 md:px-14 bg-[var(--paper)]">
     <div class="max-w-4xl mx-auto">
-      <div class="flex items-center gap-6 mb-24 border-b border-[var(--rule)] pb-12">
-        <span class="tz-section-number">§ 03</span>
-        <h2 class="tz-display text-5xl md:text-7xl">Aktuelles</h2>
+      <div class="mb-16">
+        <div class="tz-eyebrow mb-4">§ 04 — Aktuelles</div>
+        <h2 class="tz-display text-5xl md:text-7xl font-light">Presse & Auszeichnungen</h2>
       </div>
       
-      <div class="flex flex-col divide-y divide-[var(--rule-soft)] border-y border-[var(--rule-soft)]">
-        {sortedNews.map(item => {
-          const articleContent = (
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-12 items-start">
-              <div class="md:col-span-3 tz-mono text-[var(--ink-4)] pt-2" {...item.edit.date}>
+      <div class="flex flex-col border-t border-[var(--rule)]">
+        {sortedNews.map(item => (
+          <a 
+            href={item.data.link || `/posts/${item.id}`} 
+            target={item.data.link ? "_blank" : undefined}
+            class="py-10 border-b border-[var(--rule-soft)] group block"
+          >
+            <div class="grid grid-cols-1 md:grid-cols-[120px_1fr_40px] gap-6 items-baseline">
+              <div class="tz-mono text-[11px] text-[var(--ink-4)] uppercase pt-1" {...item.edit.date}>
                 {item.data.date}
               </div>
-              <div class="md:col-span-8">
-                <div class="flex items-center gap-3 mb-6">
-                  <span class="tz-eyebrow text-[var(--moss)]" {...item.edit.publication}>{item.data.publication}</span>
-                  {item.data.tag && (
-                    <>
-                      <span class="w-1 h-1 rounded-full bg-[var(--ink-4)]"></span>
-                      <span class="tz-eyebrow text-[var(--ink-4)]" {...item.edit.tag}>{item.data.tag}</span>
-                    </>
-                  )}
+              <div>
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="tz-eyebrow text-[var(--ink-3)]" {...item.edit.tag}>{item.data.tag}</span>
+                  <span class="w-1 h-1 rounded-full bg-[var(--rule)]"></span>
+                  <span class="tz-eyebrow text-[var(--ink-3)]" {...item.edit.publication}>{item.data.publication}</span>
                 </div>
-                <h3 class="tz-display text-3xl md:text-4xl mb-6 group-hover:text-[var(--ember)] transition-colors" {...item.edit.title}>{item.data.title}</h3>
-                <div class="text-[var(--ink-2)] leading-relaxed prose-sm max-w-2xl" {...item.edit.excerpt}>
+                <h3 class="tz-display text-2xl md:text-3xl mb-4 group-hover:text-[var(--ember)] transition-colors" {...item.edit.title}>{item.data.title}</h3>
+                <div class="text-[var(--ink-2)] text-sm leading-relaxed max-w-2xl" {...item.edit.excerpt}>
                   {item.data.excerpt || <PortableText value={item.data.content} />}
                 </div>
               </div>
-              <div class="hidden md:flex justify-end md:col-span-1 pt-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
-                <TzArrow className="w-8 h-8 text-[var(--ember)]" />
+              <div class="flex justify-end opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+                <TzArrow className="w-6 h-6 text-[var(--ember)]" />
               </div>
             </div>
-          );
-
-          return item.data.link ? (
-            <a href={item.data.link} target="_blank" rel="noopener noreferrer" class="py-12 group cursor-pointer block">
-              {articleContent}
-            </a>
-          ) : (
-            <a href={`/posts/${item.id}`} class="py-12 group cursor-pointer block">
-              {articleContent}
-            </a>
-          );
-        })}
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  {/* Offers */}
-  <section id="angebote" class="py-32 px-6 md:px-12 bg-[var(--ink)] text-[var(--paper)]">
+  {/* § 05 — Angebote */}
+  <section id="angebote" class="py-32 px-6 md:px-14 bg-[var(--paper)]">
     <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row justify-between items-baseline gap-8 mb-24 border-b border-white/10 pb-12">
-        <div class="flex items-center gap-6">
-          <span class="tz-section-number text-white/40">§ 04</span>
-          <h2 class="tz-display text-5xl md:text-7xl text-white">Angebote</h2>
-        </div>
-        <p class="tz-mono text-white/60 max-w-sm uppercase">
-          KONZEPTBERATUNG & CATERING AUF HÖCHSTEM NIVEAU.
-        </p>
+      <div class="mb-16">
+        <div class="tz-eyebrow mb-4">§ 05 — Angebote</div>
+        <h2 class="tz-display text-5xl md:text-[88px] font-light leading-none">
+          Drei Wege, <span class="italic">gemeinsam</span> zu kochen.
+        </h2>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 lg:gap-32">
-        <div class="flex flex-col gap-24">
-          {offers.filter(o => !o.data.featured).map(offer => (
-            <div class="group">
-              <h3 class="tz-display text-4xl md:text-5xl mb-8 group-hover:italic transition-all duration-300" {...offer.edit.title}>{offer.data.title}</h3>
-              <p class="text-[var(--paper-2)] text-xl font-light mb-6 leading-relaxed max-w-lg" {...offer.edit.lead}>{offer.data.lead}</p>
-              <div class="text-[var(--paper-3)] mb-12 leading-relaxed prose-sm opacity-80 max-w-lg" {...offer.edit.body}>
-                <PortableText value={offer.data.body} />
-              </div>
-              <a href="#kontakt" class="tz-btn tz-btn-primary w-fit uppercase text-xs tracking-widest" {...offer.edit.cta_text}>
-                {offer.data.cta_text || 'Anfragen'}
-              </a>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        {offers.map((offer, i) => (
+          <article class="border-t border-[var(--ink)] pt-4">
+            <div class="tz-mono text-[10px] tracking-[0.15em] uppercase text-[var(--ink-3)] mb-6 flex justify-between">
+               {offer.data.featured ? <span class="text-[var(--ember)]">● Flagship</span> : <span>№ {String(i + 1).padStart(2, '0')}</span>}
             </div>
-          ))}
-        </div>
+            <h3 class="tz-display text-3xl mb-6 font-medium" {...offer.edit.title}>{offer.data.title}</h3>
+            <p class="text-base text-[var(--ink-2)] font-light mb-4 leading-relaxed" {...offer.edit.lead}>
+              {offer.data.lead}
+            </p>
+            <div class="text-sm text-[var(--ink-3)] mb-8 leading-relaxed opacity-80" {...offer.edit.body}>
+               {offer.data.body}
+            </div>
+            <a href="#kontakt" class="tz-link w-fit group">
+              {offer.data.cta_text || 'Anfragen'}
+              <TzArrow className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </a>
+          </article>
+        ))}
       </div>
     </div>
   </section>
 
-
-  {/* Kontakt Formular */}
-  <section id="kontakt" class="py-32 px-6 md:px-12 bg-[var(--paper)]">
+  {/* § 06 — Kontakt */}
+  <section id="kontakt" class="py-32 md:py-40 px-6 md:px-14 bg-[var(--paper)]">
     <div class="max-w-7xl mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-24 items-start">
         <div class="lg:col-span-5">
-          <div class="flex items-center gap-6 mb-12">
-            <span class="tz-section-number">§ 05</span>
-            <h2 class="tz-display text-5xl md:text-7xl">Kontakt</h2>
-          </div>
+          <div class="tz-eyebrow mb-6">§ 06 — Besuchen Sie uns</div>
+          <h2 class="tz-display text-5xl md:text-7xl font-light mb-10 leading-none">Restaurant <span class="italic">Pinot</span>.</h2>
           <p class="text-xl text-[var(--ink-2)] leading-relaxed mb-12 font-light">
-            Haben Sie Fragen zu unseren Angeboten oder möchten Sie ein Projekt besprechen? 
-            Wir freuen uns auf Ihre Nachricht.
+            Erleben Sie meine neue Küche — in der Bündner Herrschaft, zwischen Reben und Alpen.
           </p>
-          <div class="space-y-4 tz-mono text-[var(--ink-3)]">
-            <p>SEBASTIAN TITZ</p>
-            <p>CH-7306 FLÄSCH</p>
-            <p>INFO@TITZ.COOKING</p>
+          <div class="grid grid-cols-2 gap-10">
+            <div>
+              <h4 class="tz-eyebrow text-[var(--ink-4)] mb-4">Adresse</h4>
+              <div class="tz-mono text-[12px] leading-relaxed text-[var(--ink-3)] uppercase">
+                Restaurant Pinot<br/>
+                Steigstrasse 14<br/>
+                7306 Fläsch
+              </div>
+            </div>
+            <div>
+              <h4 class="tz-eyebrow text-[var(--ink-4)] mb-4">Öffnungszeiten</h4>
+              <div class="tz-mono text-[12px] leading-relaxed text-[var(--ink-3)] uppercase">
+                Täglich 09:00 – 18:00<br/>
+                Do Abend ab 18:00
+              </div>
+            </div>
+            <div>
+              <h4 class="tz-eyebrow text-[var(--ink-4)] mb-4">Telefon</h4>
+              <div class="tz-mono text-[12px] leading-relaxed text-[var(--ink-3)] uppercase">
+                +41 79 123 45 67
+              </div>
+            </div>
+            <div>
+              <h4 class="tz-eyebrow text-[var(--ink-4)] mb-4">E-Mail</h4>
+              <div class="tz-mono text-[12px] leading-relaxed text-[var(--ink-3)] uppercase">
+                info@titz.cooking
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="lg:col-span-7 bg-[var(--paper-2)] p-8 md:p-16 rounded-sm border border-[var(--rule-soft)]">
           <form action="/api/contact" method="POST" class="space-y-12" id="contact-form">
+            <h4 class="tz-eyebrow text-[var(--ink-4)]">Nachricht senden</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div class="border-b border-[var(--rule)] pb-2 focus-within:border-[var(--ember)] transition-colors">
                 <label for="name" class="block tz-mono text-[10px] text-[var(--ink-4)] mb-4">NAME *</label>
                 <input type="text" id="name" name="name" required
                   class="w-full bg-transparent focus:outline-none text-[var(--ink)] placeholder-[var(--ink-4)]/50"
-                  placeholder="Max Mustermann"
+                  placeholder="Ihr Name"
                 />
               </div>
               <div class="border-b border-[var(--rule)] pb-2 focus-within:border-[var(--ember)] transition-colors">
                 <label for="email" class="block tz-mono text-[10px] text-[var(--ink-4)] mb-4">E-MAIL *</label>
                 <input type="email" id="email" name="email" required
                   class="w-full bg-transparent focus:outline-none text-[var(--ink)] placeholder-[var(--ink-4)]/50"
-                  placeholder="max@beispiel.ch"
+                  placeholder="ihre@email.ch"
                 />
               </div>
             </div>
 
             <div class="border-b border-[var(--rule)] pb-2 focus-within:border-[var(--ember)] transition-colors">
-              <label for="phone" class="block tz-mono text-[10px] text-[var(--ink-4)] mb-4">TELEFONNUMMER *</label>
-              <input type="tel" id="phone" name="phone" required
+              <label for="phone" class="block tz-mono text-[10px] text-[var(--ink-4)] mb-4">TELEFONNUMMER</label>
+              <input type="tel" id="phone" name="phone"
                 class="w-full bg-transparent focus:outline-none text-[var(--ink)] placeholder-[var(--ink-4)]/50"
-                placeholder="+41 79 123 45 67"
+                placeholder="+41 00 000 00 00"
               />
             </div>
 
             <div class="border-b border-[var(--rule)] pb-2 focus-within:border-[var(--ember)] transition-colors">
-              <label for="message" class="block tz-mono text-[10px] text-[var(--ink-4)] mb-4">NACHRICHT (OPTIONAL)</label>
-              <textarea id="message" name="message" rows="4"
+              <label for="message" class="block tz-mono text-[10px] text-[var(--ink-4)] mb-4">IHRE NACHRICHT... *</label>
+              <textarea id="message" name="message" rows="4" required
                 class="w-full bg-transparent focus:outline-none text-[var(--ink)] placeholder-[var(--ink-4)]/50 resize-none"
                 placeholder="Wie können wir Ihnen helfen?"
               ></textarea>
@@ -272,8 +372,9 @@ const featuredOffers = offers.filter(o => o.data.featured);
 
             <div id="form-message" class="hidden p-4 rounded-sm text-sm"></div>
 
-            <button type="submit" class="tz-btn tz-btn-primary w-full uppercase text-xs tracking-widest">
-              Anfrage senden
+            <button type="submit" class="tz-btn bg-[var(--ember)] text-[var(--paper)] w-full group">
+              Nachricht absenden
+              <TzArrow className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </form>
         </div>
