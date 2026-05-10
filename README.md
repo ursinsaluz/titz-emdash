@@ -1,67 +1,50 @@
-# EmDash Blog Template (Cloudflare)
+# titz.cooking (EmDash Redesign)
 
-A clean, minimal blog built with [EmDash](https://github.com/emdash-cms/emdash) and deployed on Cloudflare Workers with D1 and R2.
-
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/emdash-cms/templates/tree/main/blog-cloudflare)
-
-![Blog template homepage](https://raw.githubusercontent.com/emdash-cms/emdash/main/assets/templates/blog/latest/homepage-light-desktop.jpg)
+A high-performance redesign of `titz.cooking` built with [EmDash CMS](https://github.com/emdash-cms/emdash) and Astro, deployed on Cloudflare Workers with D1 and R2.
 
 ## What's Included
 
-- Featured post hero on the homepage
-- Post archive with reading time estimates
-- Category and tag archives
-- Full-text search
-- RSS feed
-- SEO metadata and JSON-LD
-- Dark/light mode
-- Forms plugin and webhook notifier
+- **Stage / Hero Section**: High-impact editorial design with dynamic corner marks and coordinates.
+- **CMS-Driven Navigation**: Top navigation is dynamically mapped to the "Hauptmenü" (main) in EmDash.
+- **Flexible Theme Settings**: Logo, CTA labels, and links are configurable via the "Theme Settings" singleton in the Admin UI.
+- **Dynamic Content**: Signature Dishes, News & Press, Offers, and CV Stations are all managed via CMS collections.
+- **404 Page**: Custom, design-aligned 404 page fully configurable via CMS.
+- **Cloudflare Integration**: Built-in support for Cloudflare D1 (database), R2 (media), and Send Email (system notifications).
 
 ## Pages
 
 | Page | Route |
 |---|---|
 | Homepage | `/` |
-| All posts | `/posts` |
-| Single post | `/posts/:slug` |
-| Category archive | `/category/:slug` |
-| Tag archive | `/tag/:slug` |
+| CV Stationen | `/stationen` |
+| News & Press | `/news` (linked via anchor or CMS) |
+| Legal / Static Pages | `/:slug` (e.g., `/impressum`, `/datenschutz`) |
 | Search | `/search` |
-| Static pages | `/pages/:slug` |
-| 404 | fallback |
-
-## Screenshots
-
-| | Desktop | Mobile |
-|---|---|---|
-| Light | ![homepage light desktop](https://raw.githubusercontent.com/emdash-cms/emdash/main/assets/templates/blog/latest/homepage-light-desktop.jpg) | ![homepage light mobile](https://raw.githubusercontent.com/emdash-cms/emdash/main/assets/templates/blog/latest/homepage-light-mobile.jpg) |
-| Dark | ![homepage dark desktop](https://raw.githubusercontent.com/emdash-cms/emdash/main/assets/templates/blog/latest/homepage-dark-desktop.jpg) | ![homepage dark mobile](https://raw.githubusercontent.com/emdash-cms/emdash/main/assets/templates/blog/latest/homepage-dark-mobile.jpg) |
+| 404 | `/404` (CMS-driven) |
 
 ## Infrastructure
 
 - **Runtime:** Cloudflare Workers
-- **Database:** D1
-- **Storage:** R2
-- **Framework:** Astro with `@astrojs/cloudflare`
+- **Database:** D1 (titz-emdash-site)
+- **Storage:** R2 (titz-emdash-media)
+- **Framework:** Astro 5.x with `@astrojs/cloudflare`
+- **Styling:** Tailwind CSS v4
 
 ## Local Development
 
 ```bash
-pnpm install
-pnpm bootstrap
-pnpm dev
+npm install
+npx emdash dev
 ```
 
 ## Deploying
 
 ```bash
-pnpm deploy
+npm run deploy
 ```
 
-Or click the deploy button above to set up the project in your Cloudflare account.
+## CMS Admin
 
-## See Also
-
-- [Node.js variant](../blog) -- same template using SQLite and local file storage
-- [All templates](../)
-- [EmDash documentation](https://github.com/emdash-cms/emdash/tree/main/docs)
+The admin UI is available at `/_emdash/admin`. 
+- **Theme Settings**: Located under ADMIN -> Theme Settings.
+- **Menus**: Located under MANAGE -> Menus -> Hauptmenü.

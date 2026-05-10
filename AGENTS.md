@@ -1,48 +1,39 @@
-This is an EmDash site -- a CMS built on Astro with a full admin UI.
+# titz.cooking — Agent Reference
+
+This is an EmDash site -- a CMS built on Astro with a full admin UI, deployed on Cloudflare.
+
+## Architecture
+
+- **Rendering**: All pages use `output: "server"` (Astro SSR).
+- **Navigation**: Uses `src/components/TzNav.astro`. It dynamically loads the menu named `main`.
+- **Theme Settings**: A singleton collection `theme_settings` controls global elements (logo, CTA).
+- **Sub-pages**: Dynamically resolved via `src/pages/[slug].astro`. Specialized templates like `stationen.astro` exist for custom layouts.
+
+## Alpin-editoriales Design System
+
+- **Typography**: 
+  - Serif: `Fraunces` (Display/Headings).
+  - Sans: `Inter Tight` (Body/UI).
+  - Mono: `JetBrains Mono` (Labels/Coordinates).
+- **Color Palette**:
+  - `--paper`: `#F4EFE7` (Primary background).
+  - `--ink`: `#1a1a18` (Primary text/Dark background).
+  - `--ember`: `oklch(0.62 0.14 45)` (Accent).
+- **Navigation Modes**:
+  - `light`: White text for dark headers (Hero sections).
+  - `dark`: Dark text for light backgrounds (Sub-pages).
 
 ## Commands
 
 ```bash
-npx emdash dev        # Start dev server (runs migrations, seeds, generates types)
-npx emdash types      # Regenerate TypeScript types from schema
-npx emdash seed seed/seed.json --validate  # Validate seed file
+npx emdash dev        # Local dev with DB
+npm run deploy        # Deploy to Cloudflare
+npx emdash seed       # Update local DB from seed.json
 ```
 
-The admin UI is at `http://localhost:4321/_emdash/admin`.
+## Knowledge Base
 
-## Key Files
-
-| File                     | Purpose                                                                            |
-| ------------------------ | ---------------------------------------------------------------------------------- |
-| `astro.config.mjs`       | Astro config with `emdash()` integration, database, and storage                    |
-| `src/live.config.ts`     | EmDash loader registration (boilerplate -- don't modify)                           |
-| `seed/seed.json`         | Schema definition + demo content (collections, fields, taxonomies, menus, widgets) |
-| `emdash-env.d.ts`        | Generated types for collections (auto-regenerated on dev server start)             |
-| `src/layouts/Base.astro` | Base layout with EmDash wiring (menus, search, page contributions)                 |
-| `src/pages/`             | Astro pages -- all server-rendered                                                 |
-
-## Skills
-
-Agent skills are in `.agents/skills/`. Load them when working on specific tasks:
-
-- **building-emdash-site** -- Querying content, rendering Portable Text, schema design, seed files, site features (menus, widgets, search, SEO, comments, bylines). Start here.
-- **creating-plugins** -- Building EmDash plugins with hooks, storage, admin UI, API routes, and Portable Text block types.
-- **emdash-cli** -- CLI commands for content management, seeding, type generation, and visual editing flow.
-
-## Rules
-
-- All content pages must be server-rendered (`output: "server"`). No `getStaticPaths()` for CMS content.
-- Image fields are objects (`{ src, alt }`), not strings. Use `<Image image={...} />` from `"emdash/ui"`.
-- `entry.id` is the slug (for URLs). `entry.data.id` is the database ULID (for API calls like `getEntryTerms`).
-- Always call `Astro.cache.set(cacheHint)` on pages that query content.
-- Taxonomy names in queries must match the seed's `"name"` field exactly (e.g., `"category"` not `"categories"`).
-
-## Alpin-editoriales Design System
-
-This project follows a strict editorial design system:
-- **Typography**: `Fraunces` (Serif Display), `Inter Tight` (Sans Body), `JetBrains Mono` (Labels/Metadata).
-- **Colors**: Paper-based palette using `--paper` (#f4efe7), `--ink` (#1c1c1c), and accent `--ember` (oklch(0.62 0.14 45)).
-- **Hierarchy**: Use section numbering (`§ 01`, `§ 02`, etc.) with the `.tz-section-number` class for all main sections.
-- **Grayscale Images**: Use `.grayscale .mix-blend-multiply` with hover reveal effects for a premium photography feel.
-- **Spacing**: High-whitespace, grid-aligned layouts.
-
+- **404 Handling**: Handled by `src/pages/404.astro`. It fetches content from the `404` slug in the CMS.
+- **Image Reveal**: Use `.grayscale .group-hover:grayscale-0` for consistent photography effects.
+- **Internal Anchors**: Main sections use `philosophie`, `restaurant`, `news`.
+- **External Links**: Use `target="_blank" rel="noopener noreferrer"` for news/press items.

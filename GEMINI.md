@@ -1,6 +1,6 @@
 # titz.cooking — Project Context
 
-This project is a redesign and port of `titz.cooking`, built as a high-performance web application using **Astro** and **EmDash CMS**, deployed on the **Cloudflare** platform.
+This project is a high-performance redesign of `titz.cooking`, built using **Astro** and **EmDash CMS**, deployed on **Cloudflare**.
 
 ## Project Overview
 
@@ -8,67 +8,54 @@ This project is a redesign and port of `titz.cooking`, built as a high-performan
 - **CMS:** [EmDash CMS](https://github.com/emdash-cms/emdash) (Headless, Git-integrated schema)
 - **Infrastructure:** 
   - **Runtime:** Cloudflare Workers
-  - **Database:** Cloudflare D1 (SQL)
-  - **Media Storage:** Cloudflare R2
-- **Styling:** Tailwind CSS v4 with custom design tokens based on a "Spices & Paper" metaphor.
-- **Design Reference:** Aligned 1:1 with `tinacms.titz.cooking` (Minimalist, Serif-heavy, high-contrast dark/light sections).
+  - **Database:** Cloudflare D1 (titz-emdash-site)
+  - **Media Storage:** Cloudflare R2 (titz-emdash-media)
+- **Styling:** Tailwind CSS v4 with custom design tokens.
+- **Design:** Editorial style (high-contrast, minimalist, serif display typography).
 
-## Tech Stack & Architecture
+## Core Design & Components
 
-- **Rendering:** Hybrid (mostly SSR via `@astrojs/cloudflare`).
-- **Data Fetching:** Uses the `emdash` SDK to query collections (pages, dishes, posts, offers) from D1.
-- **Type Safety:** TypeScript with generated types from the EmDash schema (`.emdash/types.ts`).
-- **Components:** Modular `.astro` components in `src/components/`.
+### Navigation (`TzNav.astro`)
+- **Dynamic Menu:** Mapped 1:1 to the `main` menu in EmDash.
+- **`navMode` Prop:** Supports `light` (white text for dark backgrounds) and `dark` (dark text for light backgrounds).
+- **Configuration:** Logo and CTA Button are managed via the `theme_settings` singleton collection.
+
+### 404 Page
+- Fully configurable via the CMS (slug: `404`).
+- Inherits the unified project design and header.
 
 ## Key Directories
 
-- `src/pages/`: Routing logic. `index.astro` is the primary landing page.
-- `src/components/`: Reusable UI elements (Nav, Footer, Logo, Arrow, etc.).
-- `src/layouts/`: Base HTML templates.
-- `src/styles/`: Global CSS and Tailwind theme configuration.
-- `public/`: Static assets (images in `img/`, icons).
-- `seed/`: Local database seed data (`seed.json`).
-- `.emdash/`: CMS configuration and schema definitions.
+- `src/pages/`: Routing logic. Dynamic pages use `[slug].astro` at the root.
+- `src/components/`: Modular UI elements (Nav, Footer, Logo, Arrow, etc.).
+- `src/layouts/Base.astro`: Base HTML template. Pass `navMode` here to control header theme.
+- `src/styles/`: Global CSS and Tailwind theme.
+- `public/img/`: Static design assets and icons.
+- `seed/seed.json`: Schema and initial data.
 
 ## Building and Running
 
-### Prerequisites
-- Node.js & npm/pnpm.
-- Cloudflare account with Wrangler authenticated for deployment.
-
 ### Development
 ```bash
-# Install dependencies
 npm install
-
-# Start development server (includes EmDash local DB)
-npx emdash dev
-
-# Apply/Reset seed data
-npx emdash seed seed/seed.json
+npx emdash dev        # Starts local server and CMS
+npx emdash seed       # Syncs local DB with seed/seed.json
 ```
 
-### Build & Deploy
+### Deploy
 ```bash
-# Build for production
-npm run build
-
-# Deploy to Cloudflare
-npm run deploy
+npm run deploy        # Astro build + Wrangler deploy
 ```
 
 ## Development Conventions
 
-- **Design Tokens:** Use the `--color-*` variables defined in `src/styles/global.css`. Names follow spices (salz, pfeffer, safran, etc.).
-- **Typography:** 
-  - Serif: `Fraunces` (for displays and emphasis).
-  - Sans: `Inter Tight` (for body and navigation).
-  - Mono: `JetBrains Mono` (for technical details and corner marks).
-- **CMS Access:** Always use `getEmDashEntry` or `getEmDashCollection` from `emdash` for data fetching.
-- **Image Handling:** Use the `<Image />` component from `emdash/ui` for CMS-managed images, and standard `<img>` for local static assets in `/public/img/`.
+- **Colors:** Use CSS variables (`--color-salz`, `--color-pfeffer`, `--color-ember`).
+- **Data Fetching:** Use `getEmDashEntry` and `getEmDashCollection`. Always set `Astro.cache.set(cacheHint)`.
+- **Links:** All external links in lists (e.g., News) should open in a new tab (`target="_blank"`).
 
 ## Core Mandates for Gemini CLI
 
-1. **Maintain Design Fidelity:** Any UI changes must strictly follow the minimalist design language (asymmetric grids, specific padding, consistent use of `tz-display` and `tz-eyebrow`).
-2. **Schema Integrity:** Do not modify the database schema without updating `seed/seed.json` and running `npx emdash types` to regenerate interfaces.
-3. **Deployment Safety:** Always run `npm run build` before `npm run deploy` to ensure type-safety and successful bundling.
+1. **Maintain Design Fidelity:** UI changes must strictly adhere to the editorial design (specific padding, `tz-display` font-family).
+2. **Schema Integrity:** Schema changes require updating `seed/seed.json` and regenerating types via `npx emdash types`.
+3. **Header Consistency:** Use the `navMode` prop in `Base.astro` to ensure header visibility across all pages.
+4. **Repo Sync:** Ensure all changes are committed and pushed to `main` upon completion of a task.
