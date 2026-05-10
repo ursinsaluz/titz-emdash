@@ -6,6 +6,7 @@ This project is a high-performance redesign of `titz.cooking`, built using **Ast
 
 - **Framework:** [Astro](https://astro.build/) (Server-rendered on Cloudflare Workers)
 - **CMS:** [EmDash CMS](https://github.com/emdash-cms/emdash) (Headless, Git-integrated schema)
+- **Mapped Domain:** [https://emdash.titz.cooking](https://emdash.titz.cooking) (Live Admin & Site)
 - **Infrastructure:** 
   - **Runtime:** Cloudflare Workers
   - **Database:** Cloudflare D1 (titz-emdash-site)

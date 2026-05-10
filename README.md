@@ -45,6 +45,7 @@ npm run deploy
 
 ## CMS Admin
 
-The admin UI is available at `/_emdash/admin`. 
+The admin UI is available at `https://emdash.titz.cooking/_emdash/admin`. 
 - **Theme Settings**: Located under ADMIN -> Theme Settings.
 - **Menus**: Located under MANAGE -> Menus -> Hauptmenü.
+

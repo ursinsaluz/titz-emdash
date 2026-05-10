@@ -1,6 +1,7 @@
 # titz.cooking — Agent Reference
 
 This is an EmDash site -- a CMS built on Astro with a full admin UI, deployed on Cloudflare.
+Live URL: [https://emdash.titz.cooking](https://emdash.titz.cooking)
 
 ## Architecture
 
