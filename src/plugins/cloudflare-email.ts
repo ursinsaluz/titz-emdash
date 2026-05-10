@@ -25,7 +25,7 @@ export const createPlugin = () => {
 
 				try {
 					await sendEmail.send({
-						from: "info@titz.cooking",
+						from: "kontakt@titz.cooking",
 						to: message.to,
 						subject: message.subject,
 						content: [
