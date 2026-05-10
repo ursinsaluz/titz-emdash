@@ -57,5 +57,4 @@ A simple 1px line using the `--rule` color to separate content blocks.
 
 ## 4. Visual Effects
 
-- **Paper Grain (`.tz-grain`)**: A subtle SVG noise overlay applied with `mix-blend-mode: multiply` to give the background a tactile, organic feel.
 - **Animation Ease (`--ease`)**: `cubic-bezier(.2,.7,.2,1)` - Used for smooth, natural transitions across interactive elements.
