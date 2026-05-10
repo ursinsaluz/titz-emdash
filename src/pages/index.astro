@@ -14,16 +14,23 @@ interface EmDashEntry {
 
 const { entry: homePage, cacheHint: homeHint } = await getEmDashEntry("pages", "home");
 const { entries: dishes, cacheHint: dishesHint } = await getEmDashCollection("dishes");
-const { entries: posts, cacheHint: postsHint } = await getEmDashCollection("posts");
+const { entries: news, cacheHint: newsHint } = await getEmDashCollection("news");
 const { entries: offers, cacheHint: offersHint } = await getEmDashCollection("offers");
 
 Astro.cache.set(homeHint);
 Astro.cache.set(dishesHint);
+Astro.cache.set(newsHint);
 
-// Sort posts by creation date or date field
-const sortedNews = (posts as EmDashEntry[]).sort((a, b) => 
-  new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-);
+// Sort news by date field
+const sortedNews = (news as EmDashEntry[]).sort((a, b) => {
+  const parseDate = (d: string) => {
+    if (!d) return 0;
+    const parts = d.split('.');
+    if (parts.length === 3) return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`).getTime();
+    return new Date(d).getTime() || 0;
+  };
+  return parseDate(b.data.date) - parseDate(a.data.date) || new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+});
 ---
 
 <BaseLayout>
@@ -227,8 +234,9 @@ const sortedNews = (posts as EmDashEntry[]).sort((a, b) =>
       <div class="flex flex-col border-t border-[var(--rule)]">
         {sortedNews.map(item => (
           <a 
-            href={item.data.link || `/posts/${item.id}`} 
-            target={item.data.link ? "_blank" : undefined}
+            href={item.data.news_source || '#'} 
+            target="_blank"
+            rel="noopener noreferrer"
             class="py-10 border-b border-[var(--rule-soft)] group block"
           >
             <div class="grid grid-cols-1 md:grid-cols-[120px_1fr_40px] gap-6 items-baseline">
@@ -242,8 +250,8 @@ const sortedNews = (posts as EmDashEntry[]).sort((a, b) =>
                   <span class="tz-eyebrow text-[var(--ink-3)]" {...item.edit.publication}>{item.data.publication}</span>
                 </div>
                 <h3 class="tz-display text-2xl md:text-3xl mb-4 group-hover:text-[var(--ember)] transition-colors" {...item.edit.title}>{item.data.title}</h3>
-                <div class="text-[var(--ink-2)] text-sm leading-relaxed max-w-2xl" {...item.edit.excerpt}>
-                  {item.data.excerpt || <PortableText value={item.data.content} />}
+                <div class="text-[var(--ink-2)] text-sm leading-relaxed max-w-2xl" {...item.edit.body}>
+                  {item.data.body}
                 </div>
               </div>
               <div class="flex justify-end opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
