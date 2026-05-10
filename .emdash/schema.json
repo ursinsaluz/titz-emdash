@@ -119,7 +119,11 @@
       "slug": "news",
       "label": "News & Press",
       "labelSingular": "News & Press",
-      "supports": [],
+      "supports": [
+        "drafts",
+        "preview",
+        "search"
+      ],
       "fields": [
         {
           "slug": "title",
@@ -147,6 +151,13 @@
           "label": "body",
           "type": "text",
           "required": false,
+          "unique": false
+        },
+        {
+          "slug": "news_source",
+          "label": "newssource",
+          "type": "url",
+          "required": true,
           "unique": false
         },
         {
@@ -231,6 +242,22 @@
           "type": "portableText",
           "required": false,
           "unique": false
+        },
+        {
+          "slug": "references",
+          "label": "References",
+          "type": "repeater",
+          "required": false,
+          "unique": false,
+          "validation": {
+            "subFields": [
+              {
+                "slug": "references",
+                "type": "select",
+                "label": "References"
+              }
+            ]
+          }
         }
       ]
     },
@@ -375,5 +402,5 @@
       ]
     }
   ],
-  "version": "6d12450f0a87c202"
+  "version": "95d213295a82e0f5"
 }
