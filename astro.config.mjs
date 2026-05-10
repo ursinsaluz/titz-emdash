@@ -15,9 +15,9 @@ const cloudflareEmailPlugin = () => ({
 	id: "cloudflare-email",
 	name: "Cloudflare Email",
 	version: "1.0.0",
-	capabilities: ["email:provide" as any],
+	capabilities: ["email:provide"],
 	hooks: {
-		"email:deliver": async (event: any, ctx: any) => {
+		"email:deliver": async (event, ctx) => {
 			const { message } = event;
 			const env = ctx.requestMeta?.env || globalThis;
 			const sendEmail = env.SEND_EMAIL;
